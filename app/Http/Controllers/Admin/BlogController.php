@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\BlogSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\File; 
 
@@ -12,7 +13,7 @@ class BlogController extends Controller
 {
     public function index()
     {
-       $Blog = Blog::all();
+       $Blog = Blog::with('category','blogSubCat.sub_category')->get();
 
        return response()->json(['Blog'=>$Blog]);
     }
@@ -20,6 +21,7 @@ class BlogController extends Controller
     public function create(Request $request)
     {
         $new = new Blog();
+        $new->title = $request->title;
         $new->content = $request->content;
         $new->category_id = $request->category_id;
         $new->author = $request->author;
@@ -31,6 +33,14 @@ class BlogController extends Controller
             $new->thumbnail = $filename;
         }
         $new->save();
+
+        foreach($request->sub_category_id as $item)
+        {
+            $new1 = new BlogSubCategories();
+            $new1->blog_id = $new->id;
+            $new1->subcategory_id = $item;  
+            $new1->save();
+        }
 
         $response = ['status'=>true,"message" => "New Blog Added Successfully!"];
         return response($response, 200);
@@ -46,6 +56,7 @@ class BlogController extends Controller
     public function update(Request $request)
     {
         $update = Blog::where('id',$request->id)->first();
+        $update->title = $request->title;
         $update->content = $request->content;
         $update->category_id = $request->category_id;
         $update->author = $request->author;
@@ -57,6 +68,21 @@ class BlogController extends Controller
             $update->thumbnail = $filename;
         }
         $update->save();
+
+        $gg = BlogSubCategories::where('blog_id',$update->id)->get();
+
+        foreach($gg as $item)
+        {
+            BlogSubCategories::where('id',$item->id)->delete();
+        }
+        
+        foreach($request->sub_category_id as $item)
+        {
+            $new1 = new BlogSubCategories();
+            $new1->blog_id = $update->id;
+            $new1->subcategory_id = $item;  
+            $new1->save();
+        }
 
         $response = ['status'=>true,"message" => "Blog updated Successfully!"];
         return response($response, 200);
@@ -78,6 +104,29 @@ class BlogController extends Controller
         return response($response, 200);
 
 
+
+    }
+
+    public function changeStatus($id)
+    {
+        $status = Blog::where('id',$id)->first();
+
+        if($status->status == 1)
+        {
+            $status->status = 0;
+        }
+        else
+        {
+            $status->status = 1;
+        }
+        $status->save();
+
+        // $log = new Log();
+        // $log->activity = Auth::guard('admin')->user()->first_name. ' change Music status with name ' .$status->title. ' at ' .Carbon::now();
+        // $log->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
 
     }
 

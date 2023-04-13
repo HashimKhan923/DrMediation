@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone_number')->nullable();
             $table->string('image')->nullable();
+            $table->bigInteger('category_id')->unsigned()->nullable();
             $table->boolean('is_active')->default(0);
             $table->rememberToken();
             $table->timestamps();

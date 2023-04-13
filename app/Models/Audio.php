@@ -7,5 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Audio extends Model
 {
+    public function audioSubCat()
+    {
+        return $this->hasMany(AudioSubCategories::class,'audio_id','id');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class,'category_id','id');
+    } 
+
+    
+        public function subcategory()
+    {
+        return $this->belongsTo(SubCategory::class,'subcategory_id','id');
+    }
+    
     use HasFactory;
 }

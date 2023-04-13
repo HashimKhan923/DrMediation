@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Survey extends Model
+class SubCategory extends Model
 {
-    public function subcategory()
+    public function category()
     {
-        return $this->belongsTo(SubCategory::class,'subcategory_id','id');
-    }
-
+        return $this->belongsTo(Category::class,'category_id','id');
+    } 
     use HasFactory;
 }

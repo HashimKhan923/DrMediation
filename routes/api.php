@@ -19,30 +19,52 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //common routes start
+
 Route::post('/login', '\App\Http\Controllers\AuthController@login');
 Route::post('/forgetPassword', '\App\Http\Controllers\AuthController@forgetpassword');
 Route::post('/checktoken', '\App\Http\Controllers\AuthController@token_check');
 Route::post('/resetPassword', '\App\Http\Controllers\AuthController@reset_password');
 
- Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@register');
+Route::get('/profile/view/{id}', 'App\Http\Controllers\AuthController@profile_view');
+Route::post('/profile/update', 'App\Http\Controllers\AuthController@profile_update');
+
 // common routes ends
+
+/// admin Register
+Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@register');
 
 Route::group(['middleware' => ['auth:api']], function(){
 
 
-   
-    Route::get('/profile/view/{id}', 'App\Http\Controllers\AuthController@profile_view');
-    Route::post('/profile/update', 'App\Http\Controllers\AuthController@profile_update');
-    Route::post('/changePassword', 'App\Http\Controllers\AuthController@passwordChange');
-    Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
-    Route::get('/profile/check', 'App\Http\Controllers\AuthController@usercheck');
+   /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-/////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    Route::get('/admin/profile/view/{id}', 'App\Http\Controllers\Admin\AuthController@profile_view');
+    Route::post('/admin/profile', 'App\Http\Controllers\Admin\AuthController@profile_update');
+    Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
+    Route::get('/admin/profile/check', 'App\Http\Controllers\Admin\AuthController@usercheck');
+
+    Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardController@index');
+
+
 
                                 /// Category \\\
 
     Route::group(['prefix' => '/admin/category/'], function() {
         Route::controller(App\Http\Controllers\Admin\CategoryController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::get('edit/{id}','edit');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+        });
+    });
+
+
+                                    /// SubCategory \\\
+
+    Route::group(['prefix' => '/admin/subcategory/'], function() {
+        Route::controller(App\Http\Controllers\Admin\SubCategoryController::class)->group(function () {
             Route::get('show','index');
             Route::post('create','create');
             Route::get('edit/{id}','edit');
@@ -75,6 +97,18 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
     });
 
+                                /// Banner \\\
+
+    Route::group(['prefix' => '/admin/banner/'], function() {
+        Route::controller(App\Http\Controllers\Admin\BannerController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::get('edit/{id}','edit');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+        });
+    });    
+
                                 /// Audio \\\
 
     Route::group(['prefix' => '/admin/audio/'], function() {
@@ -84,6 +118,8 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('edit/{id}','edit');
             Route::post('update','update');
             Route::get('delete/{id}','delete');
+            Route::get('status/{id}','changeStatus');
+
         });
     });
     
@@ -96,6 +132,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('edit/{id}','edit');
             Route::post('update','update');
             Route::get('delete/{id}','delete');
+            Route::get('status/{id}','changeStatus');
         });
     });     
 
@@ -108,6 +145,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('edit/{id}','edit');
             Route::post('update','update');
             Route::get('delete/{id}','delete');
+            Route::get('status/{id}','changeStatus');
         });
     });    
 
@@ -120,6 +158,20 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('edit/{id}','edit');
             Route::post('update','update');
             Route::get('delete/{id}','delete');
+            Route::get('status/{id}','changeStatus');
+        });
+    }); 
+    
+                                /// Subscription Plan \\\
+
+    Route::group(['prefix' => '/admin/subscription/'], function() {
+        Route::controller(App\Http\Controllers\Admin\SubscriptionPlanController::class)->group(function () {
+            Route::get('show','index');
+            Route::post('create','create');
+            Route::get('edit/{id}','edit');
+            Route::post('update','update');
+            Route::get('delete/{id}','delete');
+            Route::get('status/{id}','changeStatus');
         });
     });     
 
@@ -127,6 +179,12 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
     /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    Route::get('/profile/view/{id}', 'App\Http\Controllers\User\AuthController@profile_view');
+    Route::post('/profile', 'App\Http\Controllers\User\AuthController@profile_update');
+    Route::get('/profile/check', 'App\Http\Controllers\User\AuthController@usercheck');
+
+    Route::get('/','App\Http\Controllers\User\HomeController@index');
 
                                 /// Question \\\
 
@@ -162,4 +220,5 @@ Route::group(['prefix' => 'myresult/'], function() {
     //  Route::get('delete/{id}','delete');
         });
 });
+
 

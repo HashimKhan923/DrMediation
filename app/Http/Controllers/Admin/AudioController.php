@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Audio;
+use App\Models\AudioSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\File; 
 
@@ -12,7 +13,7 @@ class AudioController extends Controller
 {
     public function index()
     {
-       $Audios = Audio::all();
+       $Audios = Audio::with('category','audioSubCat.sub_category')->get();
 
        return response()->json(['Audios'=>$Audios]);
     }
@@ -23,6 +24,7 @@ class AudioController extends Controller
         $new->name = $request->name;
         $new->description = $request->description;
         $new->category_id = $request->category_id;
+
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
             $filename= date('YmdHi').$file->getClientOriginalName();
@@ -37,6 +39,14 @@ class AudioController extends Controller
         }
         $new->subscription = $request->subscription;
         $new->save();
+
+        foreach($request->sub_category_id as $item)
+        {
+            $new1 = new AudioSubCategories();
+            $new1->audio_id = $new->id;
+            $new1->subcategory_id = $item;  
+            $new1->save();
+        }
 
         $response = ['status'=>true,"message" => "New Audio Added Successfully!"];
         return response($response, 200);
@@ -70,6 +80,21 @@ class AudioController extends Controller
         $update->subscription = $request->subscription;
         $update->save();
 
+        $gg = AudioSubCategories::where('audio_id',$update->id)->get();
+
+        foreach($gg as $item)
+        {
+            AudioSubCategories::where('id',$item->id)->delete();
+        }
+        
+        foreach($request->sub_category_id as $item)
+        {
+            $new1 = new AudioSubCategories();
+            $new1->audio_id = $update->id;
+            $new1->subcategory_id = $item;  
+            $new1->save();
+        }
+
         $response = ['status'=>true,"message" => "Audio Updated Successfully!"];
         return response($response, 200);
     }
@@ -79,9 +104,9 @@ class AudioController extends Controller
       $file = Audio::find($id);
           $audio_path = public_path('Audio/'.$file->audio);
           $thumbnail_path = public_path('AudioThumbnail/'.$file->thumbnail);
-        if (File::exists($image_path))
+        if (File::exists($audio_path))
         {
-            File::delete($image_path);
+            File::delete($audio_path);
             File::delete($thumbnail_path);
         }
 
@@ -89,7 +114,28 @@ class AudioController extends Controller
         $response = ['status'=>true,"message" => "Audio Deleted Successfully!"];
         return response($response, 200);
 
+    }
 
+    public function changeStatus($id)
+    {
+        $status = Audio::where('id',$id)->first();
+
+        if($status->status == 1)
+        {
+            $status->status = 0;
+        }
+        else
+        {
+            $status->status = 1;
+        }
+        $status->save();
+
+        // $log = new Log();
+        // $log->activity = Auth::guard('admin')->user()->first_name. ' change Music status with name ' .$status->title. ' at ' .Carbon::now();
+        // $log->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
 
     }
 }

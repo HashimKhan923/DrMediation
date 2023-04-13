@@ -18,16 +18,21 @@ class SurveyController extends Controller
 
     public function create(Request $request)
     {
-        foreach($request->category_id as $category_id)
+        foreach($request->option_id as $option_id)
         {
             $new = new Survey();
             $new->user_id = $request->user_id;
-            $new->category_id = $category_id;
+            $new->subcategory_id = $subcategory_id;
             $new->save();
         }
 
         $response = ['status'=>true,"message" => "New Survey Added Successfully!"];
         return response($response, 200);
+    }
+
+    public function type(Request $request)
+    {
+        User::where('id');
     }
 
 

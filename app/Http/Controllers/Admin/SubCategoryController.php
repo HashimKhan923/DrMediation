@@ -4,63 +4,64 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\SubCategory;
 use App\Models\Category;
-use File;
+use Illuminate\Support\Facades\File; 
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
     public function index()
     {
-       $Categories = Category::with('sub_cat.category')->get();
+       $SubCategory = SubCategory::all();
 
-       return response()->json(['Categories'=>$Categories]);
+       return response()->json(['SubCategory'=>$SubCategory]);
     }
 
     public function create(Request $request)
     {
-        $new = new Category();
+        $new = new SubCategory();
         $new->name = $request->name;
-        $new->description = $request->description;
+        $new->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryThumbnail'), $filename);
+            $file->move(public_path('SubCategoryThumbnail'), $filename);
             $new->thumbnail = $filename;
         }
         $new->save();
 
-        $response = ['status'=>true,"message" => "New Category Added Successfully!"];
+        $response = ['status'=>true,"message" => "New SubCategory Added Successfully!"];
         return response($response, 200);
     }
 
     public function edit($id)
     {
-        $edit = Category::where('id',$id)->first();
+        $edit = SubCategory::where('id',$id)->first();
 
         return response()->json(['edit'=>$edit]);
     }
 
     public function update(Request $request)
     {
-        $update = Category::where('id',$request->id)->first();
+        $update = SubCategory::where('id',$request->id)->first();
         $update->name = $request->name;
-        $update->description = $request->description;
+        $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryThumbnail'), $filename);
+            $file->move(public_path('SubCategoryThumbnail'), $filename);
             $update->thumbnail = $filename;
         }
         $update->save();
 
-        $response = ['status'=>true,"message" => "Category Updated Successfully!"];
+        $response = ['status'=>true,"message" => "SubCategory Updated Successfully!"];
         return response($response, 200);
     }
 
     public function delete($id)
     {
-        $file = Category::find($id);
-        $image_path = public_path('CategoryThumbnail/'.$file->thumbnail);
+        $file = SubCategory::find($id);
+        $image_path = public_path('SubCategoryThumbnail/'.$file->thumbnail);
       if (File::exists($image_path))
       {
 
@@ -70,9 +71,7 @@ class CategoryController extends Controller
 
       $file->delete();
 
-        $response = ['status'=>true,"message" => "Category Deleted Successfully!"];
+        $response = ['status'=>true,"message" => "SubCategory Deleted Successfully!"];
         return response($response, 200);
     }
-
-
 }

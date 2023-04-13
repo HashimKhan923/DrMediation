@@ -11,9 +11,9 @@ class MyResultController extends Controller
 {
     public function index()
     {
-      $MyResult = Survey::with('category')->where('user_id',1)
-        ->select('category_id',DB::raw('count(*) *100 / (select count(*) from surveys) as percentage'))
-        ->groupBy('category_id')
+      $MyResult = Survey::with('subcategory')->where('user_id',1)
+        ->select('subcategory_id',DB::raw('count(*) *100 / (select count(*) from surveys) as percentage'))
+        ->groupBy('subcategory_id')
         ->get(); 
         
         return response()->json(['MyResult'=>$MyResult]);

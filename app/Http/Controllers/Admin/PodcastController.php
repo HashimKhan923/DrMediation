@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Podcast;
+use App\Models\PodcastSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\File; 
 
@@ -12,7 +13,7 @@ class PodcastController extends Controller
 {
     public function index()
     {
-       $Podcast = Podcast::all();
+       $Podcast = Podcast::with('category','podcastSubCat.sub_category')->get();
 
        return response()->json(['Podcast'=>$Podcast]);
     }
@@ -37,6 +38,14 @@ class PodcastController extends Controller
         }
         $new->subscription = $request->subscription;
         $new->save();
+
+        foreach($request->sub_category_id as $item)
+        {
+            $new1 = new PodcastSubCategories();
+            $new1->podcast_id = $new->id;
+            $new1->subcategory_id = $item;  
+            $new1->save();
+        }
 
         $response = ['status'=>true,"message" => "New Podcast Added Successfully!"];
         return response($response, 200);
@@ -70,6 +79,21 @@ class PodcastController extends Controller
         $update->subscription = $request->subscription;
         $update->save();
 
+        $gg = PodcastSubCategories::where('podcast_id',$update->id)->get();
+
+        foreach($gg as $item)
+        {
+            PodcastSubCategories::where('id',$item->id)->delete();
+        }
+        
+        foreach($request->sub_category_id as $item)
+        {
+            $new1 = new PodcastSubCategories();
+            $new1->podcast_id = $update->id;
+            $new1->subcategory_id = $item;  
+            $new1->save();
+        }
+
         $response = ['status'=>true,"message" => "Podcast Updated Successfully!"];
         return response($response, 200);
     }
@@ -89,7 +113,28 @@ class PodcastController extends Controller
         $response = ['status'=>true,"message" => "Podcast Deleted Successfully!"];
         return response($response, 200);
 
+    }
 
+    public function changeStatus($id)
+    {
+        $status = Podcast::where('id',$id)->first();
+
+        if($status->status == 1)
+        {
+            $status->status = 0;
+        }
+        else
+        {
+            $status->status = 1;
+        }
+        $status->save();
+
+        // $log = new Log();
+        // $log->activity = Auth::guard('admin')->user()->first_name. ' change Music status with name ' .$status->title. ' at ' .Carbon::now();
+        // $log->save();
+
+        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+        return response($response, 200);
 
     }
 }

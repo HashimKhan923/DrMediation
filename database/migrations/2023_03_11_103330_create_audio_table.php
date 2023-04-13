@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->bigInteger('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('subcategory_id')->unsigned()->nullable();
+            $table->foreign('subcategory_id')->references('id')->on('sub_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->text('audio')->nullable();
             $table->text('description')->nullable();
             $table->text('thumbnail')->nullable();
