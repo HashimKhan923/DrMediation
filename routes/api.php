@@ -77,7 +77,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => '/admin/question/'], function() {
         Route::controller(App\Http\Controllers\Admin\QuestionController::class)->group(function () {
-            Route::get('show','index');
+            Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('edit/{id}','edit');
             Route::post('update','update');
@@ -193,7 +193,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => 'survey/'], function() {
         Route::controller(App\Http\Controllers\User\SurveyController::class)->group(function () {
-            Route::get('show','index');
+            Route::get('show/{id}','index');
             Route::post('create','create');
         //  Route::get('edit/{id}','edit');
         //  Route::post('update','update');

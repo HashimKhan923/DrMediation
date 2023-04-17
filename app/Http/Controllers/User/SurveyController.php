@@ -9,9 +9,9 @@ use App\Models\Survey;
 
 class SurveyController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $Question = Question::with('options')->get();
+        $Questions = Question::with('category','options.OptionsSubCat')->where('category_id',$id)->get();
   
         return response()->json(['Question'=>$Question]);
     }
@@ -22,7 +22,8 @@ class SurveyController extends Controller
         {
             $new = new Survey();
             $new->user_id = $request->user_id;
-            $new->subcategory_id = $subcategory_id;
+            $new->category_id = $request->category_id;
+            $new->subcategory_id = $request->subcategory_id;
             $new->save();
         }
 
