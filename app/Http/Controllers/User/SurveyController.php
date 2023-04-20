@@ -18,12 +18,12 @@ class SurveyController extends Controller
 
     public function create(Request $request)
     {
-        foreach($request->option_id as $option_id)
+        foreach($request->subcategory_id as $item)
         {
             $new = new Survey();
             $new->user_id = $request->user_id;
             $new->category_id = $request->category_id;
-            $new->subcategory_id = $request->subcategory_id;
+            $new->subcategory_id = $request->$item;
             $new->save();
         }
 
