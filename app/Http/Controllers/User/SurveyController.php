@@ -18,6 +18,8 @@ class SurveyController extends Controller
 
     public function create(Request $request)
     {
+        Survey::where('user_id',$request->user_id)->delete();
+
         foreach($request->subcategory_id as $item)
         {
             $new = new Survey();
@@ -31,10 +33,6 @@ class SurveyController extends Controller
         return response($response, 200);
     }
 
-    public function type(Request $request)
-    {
-        User::where('id');
-    }
 
 
 }

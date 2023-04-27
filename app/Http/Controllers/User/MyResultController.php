@@ -18,25 +18,38 @@ class MyResultController extends Controller
     $jj = Survey::where('user_id',$request->user_id)->get();
     $subcat_id = $jj->mode('subcategory_id');
 
-    $SubCategory = SubCategory::where('id',$subcat_id)->first();  
+    if($subcat_id == 0)
+    {
+      $response = ['status'=>true,"message" => "Please Contact with your advisor!"];
+      return response($response, 200);
+    }
+    else
+    {
+      $SubCategory = SubCategory::where('id',$subcat_id)->first();  
     
-    $Audio = Audio::with('audioSubCat')->whereHas('audioSubCat',function($query)use($subcat_id){
+      $Audio = Audio::with('audioSubCat')->whereHas('audioSubCat',function($query)use($subcat_id){
+          $query->where('subcategory_id','=',$subcat_id);
+      })->get();
+  
+      $Video = Video::with('videoSubCat')->whereHas('videoSubCat',function($query)use($subcat_id){
         $query->where('subcategory_id','=',$subcat_id);
     })->get();
-
-    $Video = Video::with('videoSubCat')->whereHas('videoSubCat',function($query)use($subcat_id){
+  
+    $Podcast = Podcast::with('podcastSubCat')->whereHas('podcastSubCat',function($query)use($subcat_id){
       $query->where('subcategory_id','=',$subcat_id);
-  })->get();
+    })->get();
+  
+  
+    $Blog = Blog::with('blogSubCat')->whereHas('blogSubCat',function($query)use($subcat_id){
+      $query->where('subcategory_id','=',$subcat_id);
+    })->get();
+        
+        return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog,'SubCategory'=>$SubCategory]);
 
-  $Podcast = Podcast::with('podcastSubCat')->whereHas('podcastSubCat',function($query)use($subcat_id){
-    $query->where('subcategory_id','=',$subcat_id);
-  })->get();
 
 
-  $Blog = Blog::with('blogSubCat')->whereHas('blogSubCat',function($query)use($subcat_id){
-    $query->where('subcategory_id','=',$subcat_id);
-  })->get();
-      
-      return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog,'SubCategory'=>$SubCategory]);
+    }
+
+
   }
 }

@@ -180,6 +180,9 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
+        /// user Register
+Route::post('/register','App\Http\Controllers\User\AuthController@register');
+
     Route::get('/profile/view/{id}', 'App\Http\Controllers\User\AuthController@profile_view');
     Route::post('/profile', 'App\Http\Controllers\User\AuthController@profile_update');
     Route::get('/profile/check', 'App\Http\Controllers\User\AuthController@usercheck');
@@ -195,7 +198,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::controller(App\Http\Controllers\User\SurveyController::class)->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');
-        //  Route::get('edit/{id}','edit');
+            Route::get('reset/{id}','reset_survey');
         //  Route::post('update','update');
         //  Route::get('delete/{id}','delete');
             });
@@ -213,7 +216,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 Route::group(['prefix' => 'myresult/'], function() {
     Route::controller(App\Http\Controllers\User\MyResultController::class)->group(function () {
-        Route::get('show','index');
+        Route::get('show/{id}','index');
         Route::post('create','create');
     //  Route::get('edit/{id}','edit');
     //  Route::post('update','update');
