@@ -187,7 +187,7 @@ Route::post('/register','App\Http\Controllers\User\AuthController@register');
     Route::post('/profile', 'App\Http\Controllers\User\AuthController@profile_update');
     Route::get('/profile/check', 'App\Http\Controllers\User\AuthController@usercheck');
 
-    Route::get('/','App\Http\Controllers\User\HomeController@index');
+    Route::get('/home/{id}','App\Http\Controllers\User\HomeController@index');
 
                                 /// Question \\\
 

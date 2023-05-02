@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->bigInteger('category_id')->unsigned()->nullable();
             $table->boolean('is_active')->default(0);
+            $table->string('google2fa_secret')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
