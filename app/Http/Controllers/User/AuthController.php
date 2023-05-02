@@ -15,6 +15,7 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             "email" => "required|email|unique:users,email",
             'password' => 'required|string|min:6',
+            "phone_number" => 'required',
         ]);
         if ($validator->fails())
         {
@@ -23,12 +24,13 @@ class AuthController extends Controller
         $user = User::create([
             "name"=>$request->name,
             "email"=>$request->email,
+            "phone_number"=>$request->phone_number,
             "password"=>Hash::make($request->password),
             "role_id"=>2,
             "is_active"=>1,
         ]);
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $response = ['status'=>true,"message" => "Register Admin Successfully",'token' => $token];
+        $response = ['status'=>true,"message" => "Register Successfully",'token' => $token];
         return response($response, 200);
     }
 
