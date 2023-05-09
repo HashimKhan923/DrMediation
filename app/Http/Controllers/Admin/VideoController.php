@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\File;
 
 class VideoController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-       $Videos = Video::with('category','videoSubCat.sub_category')->get();
+       $Videos = Video::with('category','videoSubCat.sub_category')->where('category_id',$id)->get();
 
        return response()->json(['Videos'=>$Videos]);
     }

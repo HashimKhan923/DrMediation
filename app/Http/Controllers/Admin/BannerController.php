@@ -8,9 +8,9 @@ use App\Models\Banner;
 
 class BannerController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $Banner = Banner::where('status',1)->get();
+        $Banner = Banner::where('status',1)->where('category_id',$id)->get();
 
         return response()->json(['Banner'=>$Banner]);    }
 

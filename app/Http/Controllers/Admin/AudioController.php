@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\File;
 
 class AudioController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-       $Audios = Audio::with('category','audioSubCat.sub_category')->get();
+       $Audios = Audio::with('category','audioSubCat.sub_category')->where('category_id',$id)->get();
 
        return response()->json(['Audios'=>$Audios]);
     }

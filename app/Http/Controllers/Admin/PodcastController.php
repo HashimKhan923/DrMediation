@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\File;
 
 class PodcastController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-       $Podcast = Podcast::with('category','podcastSubCat.sub_category')->get();
+       $Podcast = Podcast::with('category','podcastSubCat.sub_category')->where('category_id',$id)->get();
 
        return response()->json(['Podcast'=>$Podcast]);
     }

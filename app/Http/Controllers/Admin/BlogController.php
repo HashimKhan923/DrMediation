@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\File;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-       $Blog = Blog::with('category','blogSubCat.sub_category')->get();
+       $Blog = Blog::with('category','blogSubCat.sub_category')->where('category_id',$id)->get();
 
        return response()->json(['Blog'=>$Blog]);
     }
