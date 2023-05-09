@@ -11,24 +11,34 @@ use Validator;
 class AuthController extends Controller
 {
     public function register (Request $request) {
+    
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             "email" => "required|email|unique:users,email",
             'password' => 'required|string|min:6',
-            "phone_number" => 'required',
+            "phone" => 'required',
         ]);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $user = User::create([
-            "name"=>$request->name,
-            "email"=>$request->email,
-            "phone_number"=>$request->phone_number,
-            "password"=>Hash::make($request->password),
-            "role_id"=>2,
-            "is_active"=>1,
-        ]);
+        
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone;
+        $user->password = Hash::make($request->password);
+        $user->role_id = 2;
+        $user->is_active = 1;
+        $user->save();
+        // $user = User::create([
+        //     "name"=>$request->name,
+        //     "email"=>$request->email,
+        //     "phone_number"=>$request->phone,
+        //     "password"=>Hash::make($request->password),
+        //     "role_id"=>2,
+        //     "is_active"=>1,
+        // ]);
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         $response = ['status'=>true,"message" => "Register Successfully",'token' => $token];
         return response($response, 200);
@@ -52,7 +62,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => "required|email|max:255|unique:users,email,$id,id",
-            'phone_number'=>'required|min:10|max:15',
+            // 'phone_number'=>'required|min:10|max:15',
             //'password' => 'required|string|min:6|confirmed',
         ]);
         if ($validator->fails())
@@ -62,7 +72,7 @@ class AuthController extends Controller
         $admin=User::find($id);
         $admin->name=$request->name;
         $admin->email=$request->email;
-        $admin->phone_number=$request->phone_number;
+        // $admin->phone_number=$request->phone_number;
         if($request->hasFile('image')){
             $file = $request->file('image');
             $fileType = "image-";
@@ -114,6 +124,16 @@ class AuthController extends Controller
             return response($response, 422);
         }
 
+    }
+
+    public function is_phone($id)
+    {
+        $update=User::where('phone_number',$id)->first();
+        $update->is_phone = 1;
+        $update->save();
+
+        $response = ['status'=>true,"message" => "Phone number verifed Successfully!"];
+        return response($response, 200);
     }
 
 }

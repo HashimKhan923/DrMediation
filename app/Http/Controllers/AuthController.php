@@ -21,10 +21,18 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
-                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                //dd("ok");
-                $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
-                return response($response, 200);
+                if($user->role_id == 2 && $user->is_phone == null)
+                {
+                    $response = ['status'=>true,"message" => "Phone Number is not verified"];
+                    return response($response, 422);
+                }
+                else
+                {
+                    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                    $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
+                    return response($response, 200);
+                }
+
             } else {
                 $response = ['status'=>false,"message" => "Password mismatch"];
                 return response($response, 422);

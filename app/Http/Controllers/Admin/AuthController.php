@@ -10,6 +10,7 @@ use Validator;
 class AuthController extends Controller
 {
     public function register (Request $request) {
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             "email" => "required|email|unique:users,email",
@@ -19,14 +20,16 @@ class AuthController extends Controller
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $user = User::create([
-            "name"=>$request->name,
-            "email"=>$request->email,
-            "password"=>Hash::make($request->password),
-            "role_id"=>1,
-            "is_active"=>1,
-        ]);
-        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        
+        $new = new User();
+        $new->name = $request->name;
+        $new->email = $request->email;
+        $new->password = Hash::make($request->password);
+        $new->role_id = 1;
+        $new->is_active = 1;
+        $new->save();
+        
+        $token = $new->createToken('Laravel Password Grant Client')->accessToken;
         $response = ['status'=>true,"message" => "Register Admin Successfully",'token' => $token];
         return response($response, 200);
     }

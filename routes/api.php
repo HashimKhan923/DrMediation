@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => '/admin/banner/'], function() {
         Route::controller(App\Http\Controllers\Admin\BannerController::class)->group(function () {
-            Route::get('show','index');
+            Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('edit/{id}','edit');
             Route::post('update','update');
@@ -113,7 +113,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => '/admin/audio/'], function() {
         Route::controller(App\Http\Controllers\Admin\AudioController::class)->group(function () {
-            Route::get('show','index');
+            Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('edit/{id}','edit');
             Route::post('update','update');
@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => '/admin/video/'], function() {
         Route::controller(App\Http\Controllers\Admin\VideoController::class)->group(function () {
-            Route::get('show','index');
+            Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('edit/{id}','edit');
             Route::post('update','update');
@@ -140,7 +140,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => '/admin/podcast/'], function() {
         Route::controller(App\Http\Controllers\Admin\PodcastController::class)->group(function () {
-            Route::get('show','index');
+            Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('edit/{id}','edit');
             Route::post('update','update');
@@ -153,7 +153,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     Route::group(['prefix' => '/admin/blog/'], function() {
         Route::controller(App\Http\Controllers\Admin\BlogController::class)->group(function () {
-            Route::get('show','index');
+            Route::get('show/{id}','index');
             Route::post('create','create');
             Route::get('edit/{id}','edit');
             Route::post('update','update');
@@ -182,6 +182,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
         /// user Register
 Route::post('/register','App\Http\Controllers\User\AuthController@register');
+Route::get('/phone/verify/{id}','App\Http\Controllers\User\AuthController@is_phone');
 
     Route::get('/profile/view/{id}', 'App\Http\Controllers\User\AuthController@profile_view');
     Route::post('/profile', 'App\Http\Controllers\User\AuthController@profile_update');
