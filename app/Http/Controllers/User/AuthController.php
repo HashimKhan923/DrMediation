@@ -73,12 +73,11 @@ class AuthController extends Controller
         $admin->name=$request->name;
         $admin->email=$request->email;
         // $admin->phone_number=$request->phone_number;
-        if($request->hasFile('image')){
-            $file = $request->file('image');
-            $fileType = "image-";
-            $filename = $fileType.time()."-".rand().".".$file->getClientOriginalExtension();
-            $file->storeAs("/public/profile/image", $filename);
-            $admin->image = "public/profile/image/".$filename;
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('Profile'), $filename);
+            $new->image = $filename;
         }
         //$admin->save();
         if($admin->save()){

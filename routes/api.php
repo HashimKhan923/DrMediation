@@ -176,6 +176,17 @@ Route::group(['middleware' => ['auth:api']], function(){
     });     
 
 
+                                    /// Users Managment \\\
+
+    Route::group(['prefix' => '/admin/allusers/'], function() {
+        Route::controller(App\Http\Controllers\Admin\UserManagmentController::class)->group(function () {
+            Route::get('show','all_users');
+            Route::get('delete/{id}','delete');
+            Route::get('status/{id}','changeStatus');
+        });
+    }); 
+
+
 
 
     /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

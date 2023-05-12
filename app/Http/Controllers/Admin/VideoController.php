@@ -20,6 +20,8 @@ class VideoController extends Controller
 
     public function create(Request $request)
     {
+
+        
         $new = new Video();
         $new->name = $request->name;
         $new->description = $request->description;
