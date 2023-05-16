@@ -228,15 +228,21 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
-            /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+            /////////////////////////////////// Advisor Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-                                    /// Adviser Register
+                                    // Register
 
     Route::post('advisor/register','App\Http\Controllers\Advisor\AuthController@register');
     Route::get('advisor/phone/verify/{id}','App\Http\Controllers\Advisor\AuthController@is_phone');
     Route::get('advisor/profile/view/{id}', 'App\Http\Controllers\Advisor\AuthController@profile_view');
     Route::post('advisor/profile', 'App\Http\Controllers\Advisor\AuthController@profile_update');
     Route::get('advisor/profile/check', 'App\Http\Controllers\Advisor\AuthController@usercheck');
+
+                                    // Slot
+
+    Route::get('advisor/slots/{id}','App\Http\Controllers\Advisor\SlotController@index');
+    Route::post('advisor/slot/create','App\Http\Controllers\Advisor\SlotController@create');
+    Route::get('advisor/slot/delete{id}','App\Http\Controllers\Advisor\SlotController@delete');
 
     
 }); 
