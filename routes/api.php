@@ -191,20 +191,18 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-        /// user Register
-Route::post('/register','App\Http\Controllers\User\AuthController@register');
-Route::get('/phone/verify/{id}','App\Http\Controllers\User\AuthController@is_phone');
+                        /// user Register
+            Route::post('/register','App\Http\Controllers\User\AuthController@register');
+            Route::get('/phone/verify/{id}','App\Http\Controllers\User\AuthController@is_phone');
+            Route::get('/profile/view/{id}', 'App\Http\Controllers\User\AuthController@profile_view');
+            Route::post('/profile', 'App\Http\Controllers\User\AuthController@profile_update');
+            Route::get('/profile/check', 'App\Http\Controllers\User\AuthController@usercheck');
+            Route::get('/home/{id}','App\Http\Controllers\User\HomeController@index');
 
-    Route::get('/profile/view/{id}', 'App\Http\Controllers\User\AuthController@profile_view');
-    Route::post('/profile', 'App\Http\Controllers\User\AuthController@profile_update');
-    Route::get('/profile/check', 'App\Http\Controllers\User\AuthController@usercheck');
-
-    Route::get('/home/{id}','App\Http\Controllers\User\HomeController@index');
-
-                                /// Question \\\
+                                
 
 
-
+                            /// Survey \\\
 
     Route::group(['prefix' => 'survey/'], function() {
         Route::controller(App\Http\Controllers\User\SurveyController::class)->group(function () {
@@ -217,23 +215,33 @@ Route::get('/phone/verify/{id}','App\Http\Controllers\User\AuthController@is_pho
     });
 
 
-                                        /// Question \\\
+                        /// Result \\\
+
+        Route::group(['prefix' => 'myresult/'], function() {
+        Route::controller(App\Http\Controllers\User\MyResultController::class)->group(function () {
+            Route::get('show/{id}','index');
+            Route::post('create','create');
+        //  Route::get('edit/{id}','edit');
+        //  Route::post('update','update');
+        //  Route::get('delete/{id}','delete');
+            });
+    });
 
 
-    
+            /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+                                    /// Adviser Register
+
+    Route::post('advisor/register','App\Http\Controllers\Advisor\AuthController@register');
+    Route::get('advisor/phone/verify/{id}','App\Http\Controllers\Advisor\AuthController@is_phone');
+    Route::get('advisor/profile/view/{id}', 'App\Http\Controllers\Advisor\AuthController@profile_view');
+    Route::post('advisor/profile', 'App\Http\Controllers\Advisor\AuthController@profile_update');
+    Route::get('advisor/profile/check', 'App\Http\Controllers\Advisor\AuthController@usercheck');
 
     
 }); 
 
 
-Route::group(['prefix' => 'myresult/'], function() {
-    Route::controller(App\Http\Controllers\User\MyResultController::class)->group(function () {
-        Route::get('show/{id}','index');
-        Route::post('create','create');
-    //  Route::get('edit/{id}','edit');
-    //  Route::post('update','update');
-    //  Route::get('delete/{id}','delete');
-        });
-});
+
 
 
