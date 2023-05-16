@@ -24,7 +24,7 @@ class AuthController extends Controller
             if($user->is_active == 1)
             {
             if (Hash::check($request->password, $user->password)) {
-                if($user->role_id == 2 || $user->role_id == 3 && $user->is_phone == null)
+                if(($user->role_id == 2 || $user->role_id == 3) && $user->is_phone == null)
                 {
                     $response = ['status'=>true,"message" => "Phone Number is not verified"];
                     return response($response, 422);
