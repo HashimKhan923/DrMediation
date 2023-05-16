@@ -20,6 +20,9 @@ class AuthController extends Controller
         
         $user = User::where('email', $request->email)->first();
         if ($user) {
+
+            if($user->is_active == 1)
+            {
             if (Hash::check($request->password, $user->password)) {
                 if($user->role_id == 2 || $user->role_id == 3 && $user->is_phone == null)
                 {
@@ -37,6 +40,13 @@ class AuthController extends Controller
                 $response = ['status'=>false,"message" => "Password mismatch"];
                 return response($response, 422);
             }
+
+        }
+        else
+        {
+            $response = ['status'=>false,"message" =>'Your Account has been Blocked by Admin!'];
+            return response($response, 422);
+        }
         } else {
             $response = ['status'=>false,"message" =>'User does not exist'];
             return response($response, 422);
