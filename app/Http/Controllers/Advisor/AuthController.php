@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Advisor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\AdvisorData;
 
 class AuthController extends Controller
 {
@@ -28,14 +30,20 @@ class AuthController extends Controller
         $user->role_id = 3;
         $user->is_active = 1;
         $user->save();
-        // $user = User::create([
-        //     "name"=>$request->name,
-        //     "email"=>$request->email,
-        //     "phone_number"=>$request->phone,
-        //     "password"=>Hash::make($request->password),
-        //     "role_id"=>2,
-        //     "is_active"=>1,
-        // ]);
+
+        $userData = new AdvisorData();
+        $userData->user_id = $user->id;
+        $userData->address = $user->address;
+        $userData->education = $user->education;
+        $userData->biodata = $user->biodata;
+        $userData->services = $user->services;
+        $userData->certificates = $user->certificates;
+        $userData->degrees = $user->degrees;
+        $userData->save();
+        
+
+
+
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         $response = ['status'=>true,"message" => "Register Successfully",'token' => $token];
         return response($response, 200);
