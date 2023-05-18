@@ -25,7 +25,7 @@ class SurveyController extends Controller
             $new = new Survey();
             $new->user_id = $request->user_id;
             $new->category_id = $request->category_id;
-            $new->subcategory_id = $request->$item;
+            $new->subcategory_id = $item;
             $new->save();
         }
 
