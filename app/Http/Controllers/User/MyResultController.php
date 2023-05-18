@@ -17,9 +17,11 @@ class MyResultController extends Controller
   public function index(Request $request)
   {
     $jj = Survey::where('user_id',$request->user_id)->get();
+
+    return  $jj;
     $subcat_id = $jj->mode('subcategory_id');
 
-    return  $subcat_id;
+    
 
 
     if($subcat_id == 105)
