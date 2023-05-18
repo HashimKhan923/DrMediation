@@ -16,7 +16,7 @@ class MyResultController extends Controller
 {
   public function index($id)
   {
-    $jj = Survey::where('user_id',$request->user_id)->get();
+    $jj = Survey::where('user_id',$id)->get();
 
     $subcat_id = $jj->mode('subcategory_id');
 
