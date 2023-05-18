@@ -8,6 +8,7 @@ use App\Models\Audio;
 use App\Models\Video;
 use App\Models\Podcast;
 use App\Models\Blog;
+use App\Models\Category;
 
 class HomeController extends Controller
 {

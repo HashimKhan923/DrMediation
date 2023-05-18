@@ -11,7 +11,7 @@ class SurveyController extends Controller
 {
     public function index($id)
     {
-        $Questions = Question::with('category','options.OptionsSubCat')->where('category_id',$id)->get();
+        $Question = Question::with('category','options.OptionsSubCat')->where('category_id',$id)->get();
   
         return response()->json(['Question'=>$Question]);
     }

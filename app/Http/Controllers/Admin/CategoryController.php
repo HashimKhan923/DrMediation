@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-       $Categories = Category::with('sub_cat.category')->get();
+       $Categories = Category::with('sub_cat.category')->where('id','!=',47)->get();
 
        return response()->json(['Categories'=>$Categories]);
     }
