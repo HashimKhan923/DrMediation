@@ -18,7 +18,7 @@ class MyResultController extends Controller
     $jj = Survey::where('user_id',$request->user_id)->get();
     $subcat_id = $jj->mode('subcategory_id');
 
-    if($subcat_id == 0)
+    if($subcat_id == 105)
     {
       $response = ['status'=>true,"message" => "Please Contact with your advisor!"];
       return response($response, 200);
