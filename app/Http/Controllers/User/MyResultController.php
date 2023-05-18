@@ -9,6 +9,7 @@ use App\Models\Audio;
 use App\Models\Video;
 use App\Models\Podcast;
 use App\Models\Blog;
+use App\Models\SubCategory;
 use DB;
 
 class MyResultController extends Controller
