@@ -14,11 +14,10 @@ use DB;
 
 class MyResultController extends Controller
 {
-  public function index(Request $request)
+  public function index($id)
   {
     $jj = Survey::where('user_id',$request->user_id)->get();
 
-    return  $jj;
     $subcat_id = $jj->mode('subcategory_id');
 
     
