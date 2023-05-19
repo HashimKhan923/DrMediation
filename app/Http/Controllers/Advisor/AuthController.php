@@ -12,7 +12,7 @@ use Hash;
 class AuthController extends Controller
 {
     public function register (Request $request) {
-        dd($request);
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             "email" => "required|email|unique:users,email",
@@ -38,7 +38,6 @@ class AuthController extends Controller
         $userData->address = $request->address;
         $userData->education = $request->education;
         $userData->biodata = $request->biodata;
-        $userData->services = $request->services;
         $userData->certificates = $request->certificates;
         $userData->degrees = $request->degrees;
         $userData->save();
