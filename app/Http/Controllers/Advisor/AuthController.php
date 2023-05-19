@@ -36,10 +36,45 @@ class AuthController extends Controller
         $userData = new AdvisorData();
         $userData->user_id = $user->id;
         $userData->address = $request->address;
-        $userData->education = $request->education;
+
+
+        if($request->file('education'))
+        {
+            foreach($request->education as $education)
+            {
+                $file= $education;
+                $filename= date('YmdHi').$file->getClientOriginalName();
+                $file->move(public_path('AdvisorEducation'), $filename);
+                $userData->education = $filename;
+            }
+
+        }
+
+        if($request->file('certificates'))
+        {
+            foreach($request->certificates as $certificate)
+            {
+                $file= $certificate;
+                $filename= date('YmdHi').$file->getClientOriginalName();
+                $file->move(public_path('AdvisorCertificate'), $filename);
+                $userData->certificates = $filename;
+            }
+
+        }
+
+        if($request->file('degrees'))
+        {
+            foreach($request->degrees as $degree)
+            {
+                $file= $degree;
+                $filename= date('YmdHi').$file->getClientOriginalName();
+                $file->move(public_path('AdvisorDegree'), $filename);
+                $userData->degrees = $filename;
+            }
+
+        }
+
         $userData->biodata = $request->biodata;
-        $userData->certificates = $request->certificates;
-        $userData->degrees = $request->degrees;
         $userData->save();
         
 
