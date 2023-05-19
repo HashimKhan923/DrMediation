@@ -45,8 +45,11 @@ class AuthController extends Controller
                 $file= $education;
                 $filename= date('YmdHi').$file->getClientOriginalName();
                 $file->move(public_path('AdvisorEducation'), $filename);
-                $userData->education = $filename;
+                $educationFiles[] = $filename;
+                
             }
+
+            $userData->education = $educationFiles;
 
         }
 
@@ -57,8 +60,11 @@ class AuthController extends Controller
                 $file= $certificate;
                 $filename= date('YmdHi').$file->getClientOriginalName();
                 $file->move(public_path('AdvisorCertificate'), $filename);
-                $userData->certificates = $filename;
+                $certificateFiles[] = $filename;
+                
             }
+
+            $userData->certificates = $certificateFiles;
 
         }
 
@@ -69,8 +75,11 @@ class AuthController extends Controller
                 $file= $degree;
                 $filename= date('YmdHi').$file->getClientOriginalName();
                 $file->move(public_path('AdvisorDegree'), $filename);
-                $userData->degrees = $filename;
+                $degreeFiles[] = $filename;
+                
             }
+
+            $userData->degrees = $degreeFiles;
 
         }
 
