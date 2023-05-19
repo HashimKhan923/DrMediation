@@ -33,12 +33,12 @@ class AuthController extends Controller
 
         $userData = new AdvisorData();
         $userData->user_id = $user->id;
-        $userData->address = $user->address;
-        $userData->education = $user->education;
-        $userData->biodata = $user->biodata;
-        $userData->services = $user->services;
-        $userData->certificates = $user->certificates;
-        $userData->degrees = $user->degrees;
+        $userData->address = $request->address;
+        $userData->education = $request->education;
+        $userData->biodata = $request->biodata;
+        $userData->services = $request->services;
+        $userData->certificates = $request->certificates;
+        $userData->degrees = $request->degrees;
         $userData->save();
         
 

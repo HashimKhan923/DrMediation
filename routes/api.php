@@ -230,13 +230,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             /////////////////////////////////// Advisor Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-                                    // Register
 
-    Route::post('advisor/register','App\Http\Controllers\Advisor\AuthController@register');
-    Route::get('advisor/phone/verify/{id}','App\Http\Controllers\Advisor\AuthController@is_phone');
-    Route::get('advisor/profile/view/{id}', 'App\Http\Controllers\Advisor\AuthController@profile_view');
-    Route::post('advisor/profile', 'App\Http\Controllers\Advisor\AuthController@profile_update');
-    Route::get('advisor/profile/check', 'App\Http\Controllers\Advisor\AuthController@usercheck');
 
                                     // Slot
 
@@ -246,6 +240,15 @@ Route::group(['middleware' => ['auth:api']], function(){
 
     
 }); 
+
+
+                                    // Register
+
+    Route::post('advisor/register','App\Http\Controllers\Advisor\AuthController@register');
+    Route::get('advisor/phone/verify/{id}','App\Http\Controllers\Advisor\AuthController@is_phone');
+    Route::get('advisor/profile/view/{id}', 'App\Http\Controllers\Advisor\AuthController@profile_view');
+    Route::post('advisor/profile', 'App\Http\Controllers\Advisor\AuthController@profile_update');
+    Route::get('advisor/profile/check', 'App\Http\Controllers\Advisor\AuthController@usercheck');
 
 
 
