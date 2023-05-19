@@ -19,7 +19,7 @@ class SlotController extends Controller
     {
         $new = new Slot();
         $new->user_id = $request->user_id;
-        $new->date = $request->date;
+        $new->day = $request->day;
         $new->time = $request->time;
         $new->save();
 
