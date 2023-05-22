@@ -127,7 +127,7 @@ class AuthController extends Controller
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('Profile'), $filename);
-            $new->image = $filename;
+            $admin->image = $filename;
         }
         //$admin->save();
         if($admin->save()){
