@@ -10,7 +10,7 @@ class ServiceController extends Controller
 {
     public function index($id)
     {
-        $Service = Service::where('id',$id)->get();
+        $Service = Service::where('advisor_id',$id)->get();
 
         return response()->json(['Service'=>$Service]);
     }
