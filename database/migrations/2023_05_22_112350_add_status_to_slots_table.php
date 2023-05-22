@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('slots', function (Blueprint $table) {
-            $table->string('day')->nullable();
+            $table->string('status')->default(1);
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('slots', function (Blueprint $table) {
-            $table->string('day');
+            $table->string('status');
         });
     }
 };

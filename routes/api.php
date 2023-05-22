@@ -237,6 +237,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('advisor/slots/{id}','App\Http\Controllers\Advisor\SlotController@index');
     Route::post('advisor/slot/create','App\Http\Controllers\Advisor\SlotController@create');
     Route::get('advisor/slot/delete/{id}','App\Http\Controllers\Advisor\SlotController@delete');
+    Route::get('advisor/slot/status/{id}','App\Http\Controllers\Advisor\SlotController@changeStatus');
 
     
 }); 
