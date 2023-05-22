@@ -239,6 +239,34 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('advisor/slot/delete/{id}','App\Http\Controllers\Advisor\SlotController@delete');
     Route::get('advisor/slot/status/{id}','App\Http\Controllers\Advisor\SlotController@changeStatus');
 
+
+                                    /// Service \\\
+
+            Route::group(['prefix' => '/advisor/service/'], function() {
+                Route::controller(App\Http\Controllers\Advisor\ServiceController::class)->group(function () {
+                    Route::get('show/{id}','index');
+                    Route::post('create','createOrupdate');
+                    // Route::get('edit/{id}','edit');
+                    // Route::post('update','update');
+                    // Route::get('delete/{id}','delete');
+                    Route::get('status/{id}','changeStatus');
+                });
+            });   
+
+
+                                                /// Booking \\\
+
+            Route::group(['prefix' => '/advisor/booking/'], function() {
+                Route::controller(App\Http\Controllers\Advisor\BookingController::class)->group(function () {
+                    Route::get('show/{id}','index');
+                    // Route::post('create','createOrupdate');
+                    // Route::get('edit/{id}','edit');
+                    // Route::post('update','update');
+                    // Route::get('delete/{id}','delete');
+                    Route::get('status/{id}','changeStatus');
+                });
+            }); 
+
     
 }); 
 
