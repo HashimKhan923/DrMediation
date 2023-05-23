@@ -228,6 +228,24 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
 
+                            /// Service \\\
+
+        Route::group(['prefix' => 'service/'], function() {
+            Route::controller(App\Http\Controllers\User\ServiceController::class)->group(function () {
+                Route::get('show','index');
+            });
+        });
+        
+        
+                                    /// Booking \\\
+
+        Route::group(['prefix' => 'booking/'], function() {
+            Route::controller(App\Http\Controllers\User\BookingController::class)->group(function () {
+                Route::post('show','book');
+            });
+        });  
+
+
             /////////////////////////////////// Advisor Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
