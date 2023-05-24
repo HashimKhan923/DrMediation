@@ -24,6 +24,7 @@ Route::post('/login', '\App\Http\Controllers\AuthController@login');
 Route::post('/forgetPassword', '\App\Http\Controllers\AuthController@forgetpassword');
 Route::post('/checktoken', '\App\Http\Controllers\AuthController@token_check');
 Route::post('/resetPassword', '\App\Http\Controllers\AuthController@reset_password');
+Route::get('/logout/{id}', 'App\Http\Controllers\Api\AuthController@logout');
 
 Route::get('/profile/view/{id}', 'App\Http\Controllers\AuthController@profile_view');
 Route::post('/profile/update', 'App\Http\Controllers\AuthController@profile_update');
@@ -35,6 +36,7 @@ Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@regist
 
 Route::group(['middleware' => ['auth:api']], function(){
 
+    
 
    /////////////////////////////////// Admin Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -267,6 +269,15 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::get('mySubscription/{id}','mySubscription');
                 });
         });
+
+
+                                    /// Advisors \\\
+
+        Route::group(['prefix' => 'advisors/'], function() {
+            Route::controller(App\Http\Controllers\User\AdvisorController::class)->group(function () {
+                Route::post('show','index');
+            });
+        });  
 
             /////////////////////////////////// Advisor Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

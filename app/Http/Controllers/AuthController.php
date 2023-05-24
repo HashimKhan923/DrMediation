@@ -38,6 +38,8 @@ class AuthController extends Controller
                 else
                 {
                     $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                    $user->is_online = 1;
+                    $user->save();
                     $response = ['status'=>true,"message" => "Login Successfully",'token' => $token,'user'=>$user];
                     return response($response, 200);
                 }
@@ -59,7 +61,10 @@ class AuthController extends Controller
         }
     }
 
-    public function logout (Request $request) {
+    public function logout (Request $request, $id) {
+
+        $offline = User::where('id',$id)->first();
+        $offline->is_online = 0;
         $token = $request->user()->token();
         $token->revoke();
         $response = ['status'=>true,'message' => 'You have been successfully logged out!'];
@@ -225,4 +230,5 @@ class AuthController extends Controller
         }
 
     }
+
 }
