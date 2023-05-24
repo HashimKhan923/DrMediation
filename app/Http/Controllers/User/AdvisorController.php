@@ -8,7 +8,7 @@ use App\Models\User;
 
 class AdvisorController extends Controller
 {
-    public function all_advisors()
+    public function index()
     {
        $all_advisor = User::where('role_id',3)->get();
 
