@@ -187,6 +187,17 @@ Route::group(['middleware' => ['auth:api']], function(){
     }); 
 
 
+                                 /// Advisor Managment \\\
+
+    Route::group(['prefix' => '/admin/advisor/'], function() {
+        Route::controller(App\Http\Controllers\Admin\AdvisorManagmentController::class)->group(function () {
+            Route::get('show','all_advisors');
+            Route::get('delete/{id}','delete');
+            Route::get('status/{id}','changeStatus');
+            Route::get('verify/{id}','changeVerificationStatus');
+        });
+    }); 
+
 
 
     /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
