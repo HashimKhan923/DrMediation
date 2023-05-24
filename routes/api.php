@@ -243,7 +243,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                             /// Service \\\
 
-        Route::group(['prefix' => 'service/{idd}'], function() {
+        Route::group(['prefix' => 'service/{id}'], function() {
             Route::controller(App\Http\Controllers\User\ServiceController::class)->group(function () {
                 Route::get('show','index');
             });
