@@ -243,7 +243,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
                             /// Service \\\
 
-        Route::group(['prefix' => 'service/'], function() {
+        Route::group(['prefix' => 'service/{idd}'], function() {
             Route::controller(App\Http\Controllers\User\ServiceController::class)->group(function () {
                 Route::get('show','index');
             });
@@ -275,7 +275,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
         Route::group(['prefix' => 'advisors/'], function() {
             Route::controller(App\Http\Controllers\User\AdvisorController::class)->group(function () {
-                Route::post('show','index');
+                Route::get('show','index');
             });
         });  
 
