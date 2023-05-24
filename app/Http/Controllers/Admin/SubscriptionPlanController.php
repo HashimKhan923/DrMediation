@@ -9,22 +9,13 @@ class SubscriptionPlanController extends Controller
 {
     public function index()
     {
-        $SubscriptionPlan = SubscriptionPlan::where('status',1)->get();
+        $SubscriptionPlan = SubscriptionPlan::with('advisor','user','service','slot')->where('status',1)->get();
 
         return response()->json(['SubscriptionPlan'=>$SubscriptionPlan]);  
     }
 
     public function create(Request $request)
     {
-
-        // $request->validate([
-        //     'title'=>'required',
-        //     'link'=>'required',
-        //     'image'=>'required',
-
-        // ]);
-
-
 
 
         $new = new SubscriptionPlan();

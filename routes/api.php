@@ -237,7 +237,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
         
         
-                                    /// Booking \\\
+                            /// Booking \\\
 
         Route::group(['prefix' => 'booking/'], function() {
             Route::controller(App\Http\Controllers\User\BookingController::class)->group(function () {
@@ -245,6 +245,17 @@ Route::group(['middleware' => ['auth:api']], function(){
             });
         });  
 
+
+
+                            /// Subscription \\\
+
+        Route::group(['prefix' => 'subscription/'], function() {
+            Route::controller(App\Http\Controllers\User\SubscriptionPlanController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('subscribe','subscribe');
+                Route::get('mySubscription/{id}','mySubscription');
+                });
+        });
 
             /////////////////////////////////// Advisor Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 

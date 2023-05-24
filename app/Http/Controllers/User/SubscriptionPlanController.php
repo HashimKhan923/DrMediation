@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Subscription;
+use App\Models\SubscriptionPlan;
 use App\Models\SubscribeUser;
 use Carbon\Carbon;
 
@@ -12,15 +12,15 @@ class SubscriptionPlanController extends Controller
 {
     public function index()
     {
-        $Subscription=Subscription::where('status',1)->get();
-        return response()->json(['Subscription'=>$Subscription]);
+        $SubscriptionPlan=SubscriptionPlan::where('status',1)->get();
+        return response()->json(['SubscriptionPlan'=>$SubscriptionPlan]);
     }
 
     public function subscribe(Request $request)
     {
 
       $start_time = Carbon::now();  
-      $Subscription = Subscription::where('id',$request->subscription_id)->first();
+      $Subscription = SubscriptionPlan::where('id',$request->subscription_id)->first();
       
 
 
@@ -57,7 +57,7 @@ class SubscriptionPlanController extends Controller
   
     }
 
-    public function subscribeUsers()
+    public function mySubscription()
     {
       $SubscribeUser = SubscribeUser::with('user','plan')->get();
       return response()->json(['SubscribeUser'=>$SubscribeUser]);
