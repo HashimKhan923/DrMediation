@@ -61,12 +61,12 @@ class AuthController extends Controller
         }
     }
 
-    public function logout (Request $request, $id) {
+    public function logout (Request $request) {
 
-        $offline = User::where('id',$id)->first();
-        $offline->is_online = 0;
-        $offline->save();
-        
+        // $offline = User::where('id',$id)->first();
+        // $offline->is_online = 0;
+        // $offline->save();
+
         $token = $request->user()->token();
         $token->revoke();
         $response = ['status'=>true,'message' => 'You have been successfully logged out!'];

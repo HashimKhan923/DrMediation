@@ -24,7 +24,7 @@ Route::post('/login', '\App\Http\Controllers\AuthController@login');
 Route::post('/forgetPassword', '\App\Http\Controllers\AuthController@forgetpassword');
 Route::post('/checktoken', '\App\Http\Controllers\AuthController@token_check');
 Route::post('/resetPassword', '\App\Http\Controllers\AuthController@reset_password');
-Route::get('/logout/{id}', 'App\Http\Controllers\AuthController@logout');
+Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
 
 Route::get('/profile/view/{id}', 'App\Http\Controllers\AuthController@profile_view');
 Route::post('/profile/update', 'App\Http\Controllers\AuthController@profile_update');
