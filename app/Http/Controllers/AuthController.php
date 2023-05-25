@@ -65,6 +65,8 @@ class AuthController extends Controller
 
         $offline = User::where('id',$id)->first();
         $offline->is_online = 0;
+        $offline->save();
+        
         $token = $request->user()->token();
         $token->revoke();
         $response = ['status'=>true,'message' => 'You have been successfully logged out!'];
