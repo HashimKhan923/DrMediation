@@ -10,7 +10,7 @@ class BookingController extends Controller
 {
     public function index($id)
     {
-        $data = Booking::where('advisor_id',$id)->get();
+        $data = Booking::with('advisor','user','service','slot')->where('advisor_id',$id)->get();
 
         $response = ['status'=>true,"message" => "Status Changed Successfully!"];
         return response($response, 200);
