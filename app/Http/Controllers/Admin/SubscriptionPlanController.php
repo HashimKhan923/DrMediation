@@ -9,7 +9,7 @@ class SubscriptionPlanController extends Controller
 {
     public function index()
     {
-        $SubscriptionPlan = SubscriptionPlan::where('status',1)->get();
+        $SubscriptionPlan = SubscriptionPlan::all();
 
         return response()->json(['SubscriptionPlan'=>$SubscriptionPlan]);  
     }
