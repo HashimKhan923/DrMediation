@@ -63,9 +63,9 @@ class AuthController extends Controller
 
     public function logout (Request $request) {
 
-        // $offline = User::where('id',$id)->first();
-        // $offline->is_online = 0;
-        // $offline->save();
+        $offline = User::where('id',$request->user_id)->first();
+        $offline->is_online = 0;
+        $offline->save();
 
         $token = $request->user()->token();
         $token->revoke();
