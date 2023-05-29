@@ -266,7 +266,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::controller(App\Http\Controllers\User\SubscriptionPlanController::class)->group(function () {
                 Route::get('show','index');
                 Route::post('subscribe','subscribe');
-                Route::get('mySubscription/{id}','mySubscription');
+                Route::get('mySubscription','mySubscription');
                 });
         });
 
