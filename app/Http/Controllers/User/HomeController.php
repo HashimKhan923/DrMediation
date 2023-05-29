@@ -22,6 +22,6 @@ class HomeController extends Controller
         $Blog = Blog::where('category_id',$id)->get();
         SubscribeUser::where('end_time','<=',now())->delete();
 
-        return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog]);
+        return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog,'Category'=>$Category]);
     }
 }
