@@ -9,6 +9,7 @@ use App\Models\Video;
 use App\Models\Podcast;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\SubscribeUser;
 
 class HomeController extends Controller
 {
@@ -19,6 +20,7 @@ class HomeController extends Controller
         $Video = Video::where('category_id',$id)->get();
         $Podcast = Podcast::where('category_id',$id)->get();
         $Blog = Blog::where('category_id',$id)->get();
+        SubscribeUser::where('end_time','<=',now())->delete();
 
         return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog]);
     }
