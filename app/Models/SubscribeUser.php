@@ -14,7 +14,7 @@ class SubscribeUser extends Model
 
     public function plan()
     {
-        return $this->hasOne(Subscription::class,'id','subscription_id');
+        return $this->hasOne(SubscriptionPlan::class,'id','subscription_id');
     }
     use HasFactory;
 }
