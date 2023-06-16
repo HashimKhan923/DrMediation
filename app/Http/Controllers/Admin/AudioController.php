@@ -20,6 +20,8 @@ class AudioController extends Controller
 
     public function create(Request $request)
     {
+        return $request;
+
         $new = new Audio();
         $new->name = $request->name;
         $new->description = $request->description;
