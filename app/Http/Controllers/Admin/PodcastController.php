@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Podcast;
 use App\Models\PodcastSubCategories;
 use App\Models\Category;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Storage;
 
 class PodcastController extends Controller
 {

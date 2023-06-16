@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Audio;
 use App\Models\AudioSubCategories;
 use App\Models\Category;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Storage;
 
 class AudioController extends Controller
 {

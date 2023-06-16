@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SubCategory;
 use App\Models\Category;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Storage;
 
 class SubCategoryController extends Controller
 {
