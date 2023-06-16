@@ -24,8 +24,8 @@ class BannerController extends Controller
         $new->link = $request->link;
         if($request->file('image')){
             $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Banners'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->image = $filename;
         }
         $new->save();
@@ -40,13 +40,11 @@ class BannerController extends Controller
     public function delete($id)
     {
         $file = Banner::find($id);
-        $image_path = public_path('Banners/'.$file->audio);
-      if (File::exists($image_path))
-      {
-
-          File::delete($image_path);
-
-      }
+        $image_path = 'app/public'.$file->image;
+        if(Storage::exists($image_path))
+        {
+            Storage::delete($image_path);
+        }
 
       $file->delete();
       $response = ['status'=>true,"message" => "Banner Deleted Successfully!"];
@@ -74,8 +72,8 @@ class BannerController extends Controller
         $update->link = $request->link;
         if($request->file('image')){
             $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Banners'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->image = $filename;
         }
         $update->save();

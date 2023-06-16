@@ -28,14 +28,14 @@ class VideoController extends Controller
         $new->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('VideoThumbnail'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->thumbnail = $filename;
         }
         if($request->file('video')){
             $file= $request->file('video');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Video'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->video = $filename;
         }
         $new->subscription = $request->subscription;
@@ -68,14 +68,14 @@ class VideoController extends Controller
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('VideoThumbnail'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->thumbnail = $filename;
         }
         if($request->file('video')){
             $file= $request->file('video');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Video'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->video = $filename;
         }
         $update->subscription = $request->subscription;
@@ -103,15 +103,18 @@ class VideoController extends Controller
     public function delete($id)
     {
       $file = Video::find($id);
-          $video_path = public_path('Video/'.$file->video);
-          $thumbnail_path = public_path('VideoThumbnail/'.$file->thumbnail);
-        if (File::exists($video_path))
-        {
+          
+          $image_path = 'app/public'.$file->thumbnail;
+          if(Storage::exists($image_path))
+          {
+              Storage::delete($image_path);
+          }
 
-            File::delete($video_path);
-            File::delete($thumbnail_path);
-
-        }
+          $video_path = 'app/public'.$file->video;
+          if(Storage::exists($video_path))
+          {
+              Storage::delete($video_path);
+          }
 
         $file->delete();
         $response = ['status'=>true,"message" => "Video Deleted Successfully!"];

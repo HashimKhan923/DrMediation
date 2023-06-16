@@ -25,10 +25,6 @@ class SubscriptionPlanController extends Controller
         $new->time_name = $request->time_name;
         $new->save();
 
-        // $log = new Log();
-        // $log->activity = Auth::guard('admin')->user()->first_name. ' create Subscription with name ' .$new->name. ' at ' .Carbon::now();
-        // $log->save();
-
         $response = ['status'=>true,"message" => "New Subscription Added Successfully!"];
         return response($response, 200);
 

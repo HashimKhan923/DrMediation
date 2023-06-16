@@ -26,15 +26,15 @@ class AudioController extends Controller
         $new->category_id = $request->category_id;
 
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('AudioThumbnail'), $filename);
+            $file= $request->file('logo');
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->thumbnail = $filename;
         }
         if($request->file('audio')){
-            $file= $request->file('audio');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Audio'), $filename);
+            $file= $request->file('logo');
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->audio = $filename;
         }
         $new->subscription = $request->subscription;
@@ -66,15 +66,15 @@ class AudioController extends Controller
         $update->description = $request->description;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('AudioThumbnail'), $filename);
+            $file= $request->file('logo');
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->thumbnail = $filename;
         }
         if($request->file('audio')){
-            $file= $request->file('audio');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Audio'), $filename);
+            $file= $request->file('logo');
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->audio = $filename;
         }
         $update->subscription = $request->subscription;
@@ -102,13 +102,19 @@ class AudioController extends Controller
     public function delete($id)
     {
       $file = Audio::find($id);
-          $audio_path = public_path('Audio/'.$file->audio);
-          $thumbnail_path = public_path('AudioThumbnail/'.$file->thumbnail);
-        if (File::exists($audio_path))
-        {
-            File::delete($audio_path);
-            File::delete($thumbnail_path);
-        }
+          
+
+          $image_path = 'app/public'.$file->thumbnail;
+          if(Storage::exists($image_path))
+          {
+              Storage::delete($image_path);
+          }
+
+          $audio_path = 'app/public'.$file->audio;
+          if(Storage::exists($audio_path))
+          {
+              Storage::delete($audio_path);
+          }
 
         $file->delete();
         $response = ['status'=>true,"message" => "Audio Deleted Successfully!"];

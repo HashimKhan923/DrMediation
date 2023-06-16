@@ -26,14 +26,14 @@ class PodcastController extends Controller
         $new->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('PodcastThumbnail'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->thumbnail = $filename;
         }
         if($request->file('podcast')){
             $file= $request->file('podcast');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Podcast'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->podcast = $filename;
         }
         $new->subscription = $request->subscription;
@@ -66,14 +66,14 @@ class PodcastController extends Controller
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('PodcastThumbnail'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->thumbnail = $filename;
         }
         if($request->file('podcast')){
             $file= $request->file('podcast');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Podcast'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->podcast = $filename;
         }
         $update->subscription = $request->subscription;
@@ -101,13 +101,18 @@ class PodcastController extends Controller
     public function delete($id)
     {
       $file = Podcast::find($id);
-          $podcast_path = public_path('Podcast/'.$file->podcast);
-          $thumbnail_path = public_path('PodcastThumbnail/'.$file->thumbnail);
-        if (File::exists($podcast_path))
-        {
-            File::delete($podcast_path);
-            File::delete($thumbnail_path);
-        }
+      
+          $image_path = 'app/public'.$file->thumbnail;
+          if(Storage::exists($image_path))
+          {
+              Storage::delete($image_path);
+          }
+
+          $podcast_path = 'app/public'.$file->podcast;
+          if(Storage::exists($podcast_path))
+          {
+              Storage::delete($podcast_path);
+          }
 
         $file->delete();
         $response = ['status'=>true,"message" => "Podcast Deleted Successfully!"];

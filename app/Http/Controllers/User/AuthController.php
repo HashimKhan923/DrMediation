@@ -31,14 +31,7 @@ class AuthController extends Controller
         $user->role_id = 2;
         $user->is_active = 1;
         $user->save();
-        // $user = User::create([
-        //     "name"=>$request->name,
-        //     "email"=>$request->email,
-        //     "phone_number"=>$request->phone,
-        //     "password"=>Hash::make($request->password),
-        //     "role_id"=>2,
-        //     "is_active"=>1,
-        // ]);
+
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         $response = ['status'=>true,"message" => "Register Successfully",'token' => $token];
         return response($response, 200);
@@ -62,8 +55,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => "required|email|max:255|unique:users,email,$id,id",
-            // 'phone_number'=>'required|min:10|max:15',
-            //'password' => 'required|string|min:6|confirmed',
+
         ]);
         if ($validator->fails())
         {
@@ -72,14 +64,12 @@ class AuthController extends Controller
         $admin=User::find($id);
         $admin->name=$request->name;
         $admin->email=$request->email;
-        // $admin->phone_number=$request->phone_number;
         if($request->file('image')){
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('Profile'), $filename);
             $new->image = $filename;
         }
-        //$admin->save();
         if($admin->save()){
           $response = ['status'=>true,"message" => "Profile Update Successfully","user"=>$admin];
           return response($response, 200);
@@ -99,7 +89,6 @@ class AuthController extends Controller
 
         $validator = Validator::make($controlls, $rules);
         if ($validator->fails()) {
-            //return redirect()->back()->withErrors($validator)->withInput($controlls);
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         $user = User::where('id',$request->id)->first();

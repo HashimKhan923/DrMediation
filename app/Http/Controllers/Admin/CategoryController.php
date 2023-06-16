@@ -23,8 +23,8 @@ class CategoryController extends Controller
         $new->description = $request->description;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryThumbnail'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $new->thumbnail = $filename;
         }
         $new->save();
@@ -47,8 +47,8 @@ class CategoryController extends Controller
         $update->description = $request->description;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('CategoryThumbnail'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $update->thumbnail = $filename;
         }
         $update->save();
@@ -60,13 +60,11 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $file = Category::find($id);
-        $image_path = public_path('CategoryThumbnail/'.$file->thumbnail);
-      if (File::exists($image_path))
-      {
-
-          File::delete($image_path);
-
-      }
+        $image_path = 'app/public'.$file->thumbnail;
+        if(Storage::exists($image_path))
+        {
+            Storage::delete($image_path);
+        }
 
       $file->delete();
 

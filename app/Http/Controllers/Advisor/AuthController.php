@@ -58,10 +58,9 @@ class AuthController extends Controller
             foreach($request->certificates as $certificate)
             {
                 $file= $certificate;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('AdvisorCertificate'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $certificateFiles[] = $filename;
-                
             }
 
             $userData->certificates = $certificateFiles;
@@ -73,8 +72,8 @@ class AuthController extends Controller
             foreach($request->degrees as $degree)
             {
                 $file= $degree;
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('AdvisorDegree'), $filename);
+                $filename= date('YmdHis').$file->getClientOriginalName();
+                $file->storeAs('public', $filename);
                 $degreeFiles[] = $filename;
                 
             }
@@ -125,8 +124,8 @@ class AuthController extends Controller
         // $admin->phone_number=$request->phone_number;
         if($request->file('image')){
             $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file->move(public_path('Profile'), $filename);
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
             $admin->image = $filename;
         }
         //$admin->save();
