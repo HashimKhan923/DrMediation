@@ -20,8 +20,8 @@ class PodcastController extends Controller
 
     public function create(Request $request)
     {
-        dd($request->sub_category_id);
-        
+        dd($request);
+
         $new = new Podcast();
         $new->name = $request->name;
         $new->description = $request->description;
