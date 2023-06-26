@@ -221,6 +221,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::controller(App\Http\Controllers\User\SurveyController::class)->group(function () {
             Route::get('show/{id}','index');
             Route::post('create','create');
+            Route::post('app/create','app_create');
             Route::get('reset/{id}','reset_survey');
         //  Route::post('update','update');
         //  Route::get('delete/{id}','delete');
