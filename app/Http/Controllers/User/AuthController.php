@@ -116,28 +116,12 @@ class AuthController extends Controller
 
     public function is_phone($id)
     {
+        $update=User::where('phone_number',$id)->first();
+        $update->is_phone = 1;
+        $update->save();
 
-        
-
-            $update=User::where('phone_number',$id)->first();
-
-
-            $update->is_phone = 1;
-            if($update->save())
-            {
-                $response = ['status'=>true,"message" => "Phone number verifed Successfully!",'data'=>$update];
-                return response($response, 200);
-            }
-            else
-            {
-                $response = ['status'=>true,"message" => "Not Success!",'data'=>$update];
-                return response($response, 200);
-            }
-
-
-
-
-
+        $response = ['status'=>true,"message" => "Phone number verifed Successfully!"];
+        return response($response, 200);
     }
 
 }
