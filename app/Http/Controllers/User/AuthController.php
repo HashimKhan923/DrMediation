@@ -123,9 +123,17 @@ class AuthController extends Controller
 
 
             $update->is_phone = 1;
-            $update->save();
-            $response = ['status'=>true,"message" => "Phone number verifed Successfully!",'data'=>$update];
-            return response($response, 200);
+            if($update->save())
+            {
+                $response = ['status'=>true,"message" => "Phone number verifed Successfully!",'data'=>$update];
+                return response($response, 200);
+            }
+            else
+            {
+                $response = ['status'=>true,"message" => "Not Success!",'data'=>$update];
+                return response($response, 200);
+            }
+
 
 
 
