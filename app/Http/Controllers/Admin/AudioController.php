@@ -68,13 +68,13 @@ class AudioController extends Controller
         $update->description = $request->description;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            $file= $request->file('logo');
+            $file= $request->file('thumbnail');
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->storeAs('public', $filename);
             $update->thumbnail = $filename;
         }
         if($request->file('audio')){
-            $file= $request->file('logo');
+            $file= $request->file('audio');
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->storeAs('public', $filename);
             $update->audio = $filename;
