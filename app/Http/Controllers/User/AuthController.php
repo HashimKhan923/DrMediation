@@ -68,7 +68,7 @@ class AuthController extends Controller
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('Profile'), $filename);
-            $new->image = $filename;
+            $admin->image = $filename;
         }
         if($admin->save()){
           $response = ['status'=>true,"message" => "Profile Update Successfully","user"=>$admin];
