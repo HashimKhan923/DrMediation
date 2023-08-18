@@ -30,7 +30,7 @@ class AuthController extends Controller
         $user->phone_number = $request->phone;
         $user->password = Hash::make($request->password);
         $user->role_id = 3;
-        $user->is_active = 1;
+        // $user->is_active = 1;
         $user->save();
 
         $userData = new AdvisorData();
@@ -182,5 +182,25 @@ class AuthController extends Controller
 
         $response = ['status'=>true,"message" => "Phone number verifed Successfully!"];
         return response($response, 200);
+    }
+
+    public function is_active($id)
+    {
+        $is_active = User::where('id',$id)->first();
+
+        if($is_active->is_active == 1)
+        {
+            $is_active->is_active = 0;
+
+            $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+            return response($response, 200);
+        }
+        else
+        {
+            $is_active->is_active = 1;
+
+            $response = ['status'=>true,"message" => "Status Changed Successfully!"];
+            return response($response, 200);
+        }
     }
 }

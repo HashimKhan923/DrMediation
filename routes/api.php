@@ -333,6 +333,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('advisor/profile/view/{id}', 'App\Http\Controllers\Advisor\AuthController@profile_view');
     Route::post('advisor/profile', 'App\Http\Controllers\Advisor\AuthController@profile_update');
     Route::get('advisor/profile/check', 'App\Http\Controllers\Advisor\AuthController@usercheck');
+    Route::get('advisor/status/{id}', 'App\Http\Controllers\Advisor\AuthController@is_active');
 
 
 
