@@ -57,9 +57,9 @@ class SubscriptionPlanController extends Controller
   
     }
 
-    public function mySubscription()
+    public function mySubscription($id)
     {
-      $SubscribeUser = SubscribeUser::with('user','plan')->get();
+      $SubscribeUser = SubscribeUser::with('user','plan')->where('user_id',$id)->get();
       return response()->json(['SubscribeUser'=>$SubscribeUser]);
     }
 }
