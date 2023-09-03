@@ -88,7 +88,7 @@ class AudioController extends Controller
             $category->category_id = $categoryData['category_id'];
             $category->save();
     
-            foreach ($categoryData['subcategories'] as $subcategoryId) {
+            foreach ($categoryData['subcategory_id'] as $subcategoryId) {
                 $subcategory = new AudioSubCategories();
                 $subcategory->audio_id = $new->id;
                 $subcategory->audio_category_id = $subcategoryId;
