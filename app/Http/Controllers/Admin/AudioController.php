@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Audio;
+use App\Models\AudioCategory;
 use App\Models\AudioSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
@@ -49,6 +50,60 @@ class AudioController extends Controller
             $new1->subcategory_id = $item;  
             $new1->save();
         }
+
+
+
+
+
+
+
+
+
+
+
+        $new = new Audio();
+        $new->name = $request->name;
+        $new->description = $request->description;
+        $new->category_id = $request->category_id;
+
+        if($request->file('thumbnail')){
+            $file= $request->file('thumbnail');
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
+            $new->thumbnail = $filename;
+        }
+        if($request->file('audio')){
+            $file= $request->file('audio');
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->storeAs('public', $filename);
+            $new->audio = $filename;
+        }
+        $new->subscription = $request->subscription;
+        $new->save();
+    
+        // Create categories and subcategories records
+        foreach ($request->categories as $categoryData) {
+            $category = new AudioCategory();
+            $category->audio_id = $new->id;
+            $category->category_id = $categoryData['category_id'];
+            $category->save();
+    
+            foreach ($categoryData['subcategories'] as $subcategoryId) {
+                $subcategory = new AudioSubCategories();
+                $subcategory->audio_id = $new->id;
+                $subcategory->audio_category_id = $subcategoryId;
+                $subcategory->category_id = $category->id; // Set the category ID for the subcategory
+                $subcategory->save();
+            }
+    
+            // // Attach the category to the product
+            // $product->categories()->attach($category->id);
+        }
+
+
+
+
+
 
         $response = ['status'=>true,"message" => "New Audio Added Successfully!"];
         return response($response, 200);

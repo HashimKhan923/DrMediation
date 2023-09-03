@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Audio extends Model
 {
+
+    public function audioCat()
+    {
+        return $this->hasMany(AudioCategories::class,'audio_id','id');
+    }
+
     public function audioSubCat()
     {
         return $this->hasMany(AudioSubCategories::class,'audio_id','id');

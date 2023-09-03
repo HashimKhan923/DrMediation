@@ -336,6 +336,9 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('advisor/status/{id}', 'App\Http\Controllers\Advisor\AuthController@is_active');
 
 
+    Route::get('/home/{id}','App\Http\Controllers\User\HomeController@index');
+
+
 
 
 
