@@ -11,8 +11,9 @@ class UserManagmentController extends Controller
     public function all_users()
     {
        $all_users = User::where('role_id',2)->get();
+       $all_admins = User::where('role_id',1)->get();
 
-       return response()->json(['all_users'=>$all_users]); 
+       return response()->json(['all_users'=>$all_users,'all_admins'=>$all_admins]); 
     }
 
     public function changeStatus($id)
