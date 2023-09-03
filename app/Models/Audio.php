@@ -10,7 +10,7 @@ class Audio extends Model
 
     public function audioCat()
     {
-        return $this->hasMany(AudioCategories::class,'audio_id','id');
+        return $this->hasMany(AudioCategory::class,'audio_id','id');
     }
 
     public function audioSubCat()
