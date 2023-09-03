@@ -30,7 +30,7 @@ class AuthController extends Controller
                     return response($response, 422);
                 }
 
-                if(($user->role_id == 2 || $user->role_id == 3) && $user->is_phone == null)
+                if($user->role_id == 2 && $user->is_phone == null)
                 {
                     $response = ['status'=>true,"message" => "Phone Number is not verified"];
                     return response($response, 422);

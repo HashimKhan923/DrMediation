@@ -44,7 +44,7 @@ class AuthController extends Controller
             {
                 $file= $education;
                 $filename= date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path('AdvisorEducation'), $filename);
+                $file->storeAs('public', $filename);
                 $educationFiles[] = $filename;
                 
             }
