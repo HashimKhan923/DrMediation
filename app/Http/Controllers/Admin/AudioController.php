@@ -23,33 +23,33 @@ class AudioController extends Controller
     {
         
 
-        $new = new Audio();
-        $new->name = $request->name;
-        $new->description = $request->description;
-        $new->category_id = $request->category_id;
+        // $new = new Audio();
+        // $new->name = $request->name;
+        // $new->description = $request->description;
+        // $new->category_id = $request->category_id;
 
-        if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $new->thumbnail = $filename;
-        }
-        if($request->file('audio')){
-            $file= $request->file('audio');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $new->audio = $filename;
-        }
-        $new->subscription = $request->subscription;
-        $new->save();
+        // if($request->file('thumbnail')){
+        //     $file= $request->file('thumbnail');
+        //     $filename= date('YmdHis').$file->getClientOriginalName();
+        //     $file->storeAs('public', $filename);
+        //     $new->thumbnail = $filename;
+        // }
+        // if($request->file('audio')){
+        //     $file= $request->file('audio');
+        //     $filename= date('YmdHis').$file->getClientOriginalName();
+        //     $file->storeAs('public', $filename);
+        //     $new->audio = $filename;
+        // }
+        // $new->subscription = $request->subscription;
+        // $new->save();
 
-        foreach($request->sub_category_id as $item)
-        {
-            $new1 = new AudioSubCategories();
-            $new1->audio_id = $new->id;
-            $new1->subcategory_id = $item;  
-            $new1->save();
-        }
+        // foreach($request->sub_category_id as $item)
+        // {
+        //     $new1 = new AudioSubCategories();
+        //     $new1->audio_id = $new->id;
+        //     $new1->subcategory_id = $item;  
+        //     $new1->save();
+        // }
 
 
 
