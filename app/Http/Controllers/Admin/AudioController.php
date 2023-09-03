@@ -14,7 +14,9 @@ class AudioController extends Controller
 {
     public function index($id)
     {
-       $Audios = Audio::with('category','audioSubCat.sub_category')->where('category_id',$id)->get();
+       $Audios = Audio::with('category','audioCat','audioSubCat.sub_category')->whereHas('audioCat', function ($query){
+        $query->where('category_id',$id);
+       })->get();
 
        return response()->json(['Audios'=>$Audios]);
     }

@@ -17,12 +17,8 @@ class Audio extends Model
     {
         return $this->hasMany(AudioSubCategories::class,'audio_id','id');
     }
-    public function category()
-    {
-        return $this->belongsTo(Category::class,'category_id','id');
-    } 
 
-    
+
         public function subcategory()
     {
         return $this->belongsTo(SubCategory::class,'subcategory_id','id');
