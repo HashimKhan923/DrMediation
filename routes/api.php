@@ -202,6 +202,16 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                    /// VCV \\\
+
+        Route::group(['prefix' => '/admin/vcv/'], function() {
+            Route::controller(App\Http\Controllers\Admin\VCVController::class)->group(function () {
+                Route::get('show','index');
+                Route::post('createOrupdate','createOrupdate');
+            });
+        });     
+
+
     /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
