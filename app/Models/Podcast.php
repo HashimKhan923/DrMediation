@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Podcast extends Model
 {
+
+    public function podcastCat()
+    {
+        return $this->hasMany(PodcastCategory::class,'podcast_id','id');
+    }
     
     public function podcastSubCat()
     {

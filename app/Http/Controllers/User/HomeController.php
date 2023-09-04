@@ -16,33 +16,28 @@ class HomeController extends Controller
 {
     public function index($id)
     {
+        $Category = Category::where('id',$id)->first();
+
+        $Audio = Audio::with('audioCat','audioSubCat.sub_category')->whereHas('audioCat', function ($query) use ($id){
+            $query->where('category_id',$id);
+           })->get();
+
+        $Video = Video::with('videoCat','videoSubCat.sub_category')->whereHas('videoCat', function ($query) use ($id){
+            $query->where('category_id',$id);
+           })->get();
 
 
-        Mail::send(
-            'khan',
-            [
-                'token'=>'sasa',
-                'name'=>'dasa',
-                //'last_name'=>$query->last_name
-            ], 
-        
-        function ($message){
-            $message->from(env('MAIL_USERNAME'));
-            $message->to('khanhash1994@gmail.com');
-            $message->subject('Forget Password');
-        });
-        return response(['status' => true, 'message' => 'Token send to your email']);
+        $Podcast = Podcast::with('podcastCat','podcastSubCat.sub_category')->whereHas('podcastCat', function ($query) use ($id){
+            $query->where('category_id',$id);
+           })->get();
 
 
+        $Blog = Blog::with('blogCat','blogSubCat.sub_category')->whereHas('blogCat', function ($query) use ($id){
+            $query->where('category_id',$id);
+           })->get();
+           
+        SubscribeUser::where('end_time','<=',now())->delete();
 
-
-        // $Category = Category::where('id',$id)->first();
-        // $Audio = Audio::where('category_id',$id)->get();
-        // $Video = Video::where('category_id',$id)->get();
-        // $Podcast = Podcast::where('category_id',$id)->get();
-        // $Blog = Blog::where('category_id',$id)->get();
-        // SubscribeUser::where('end_time','<=',now())->delete();
-
-        // return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog,'Category'=>$Category]);
+        return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog,'Category'=>$Category]);
     }
 }

@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
+
+
+    public function videoCat()
+    {
+        return $this->hasMany(VideoCategory::class,'video_id','id');
+    }
+
     public function videoSubCat()
     {
         return $this->hasMany(VideoSubCategories::class,'video_id','id');

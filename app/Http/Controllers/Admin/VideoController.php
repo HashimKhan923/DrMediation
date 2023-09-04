@@ -14,7 +14,9 @@ class VideoController extends Controller
 {
     public function index($id)
     {
-       $Videos = Video::with('category','videoSubCat.sub_category')->where('category_id',$id)->get();
+        $Videos = Video::with('videoCat','videoSubCat.sub_category')->whereHas('videoCat', function ($query) use ($id){
+            $query->where('category_id',$id);
+           })->get();
 
        return response()->json(['Videos'=>$Videos]);
     }

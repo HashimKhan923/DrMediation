@@ -13,7 +13,9 @@ class BlogController extends Controller
 {
     public function index($id)
     {
-       $Blog = Blog::with('category','blogSubCat.sub_category')->where('category_id',$id)->get();
+        $Blog = Blog::with('blogCat','blogSubCat.sub_category')->whereHas('blogCat', function ($query) use ($id){
+            $query->where('category_id',$id);
+           })->get();
 
        return response()->json(['Blog'=>$Blog]);
     }
