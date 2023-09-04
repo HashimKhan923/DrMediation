@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Podcast;
+use App\Models\PodcastCategory;
 use App\Models\PodcastSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,6 @@ class PodcastController extends Controller
         $new = new Podcast();
         $new->name = $request->name;
         $new->description = $request->description;
-        $new->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -41,13 +41,31 @@ class PodcastController extends Controller
         $new->subscription = $request->subscription;
         $new->save();
 
-        foreach($request->sub_category_id as $item)
-        {
-            $new1 = new PodcastSubCategories();
-            $new1->podcast_id = $new->id;
-            $new1->subcategory_id = $item;  
-            $new1->save();
+        // Create categories and subcategories records
+        foreach ($request->categories as $categoryData) {
+            $category = new PodcastCategory();
+            $category->podcast_id = $new->id;
+            $category->category_id = $categoryData['category_id'];
+            $category->save();
+    
+            foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                $subcategory = new PodcastSubCategories();
+                $subcategory->podcast_id = $new->id;
+                $subcategory->podcast_category_id = $category->id;
+                $subcategory->subcategory_id = $subcategoryId;
+                
+                $subcategory->save();
+            }
+
         }
+
+        // foreach($request->sub_category_id as $item)
+        // {
+        //     $new1 = new PodcastSubCategories();
+        //     $new1->podcast_id = $new->id;
+        //     $new1->subcategory_id = $item;  
+        //     $new1->save();
+        // }
 
         $response = ['status'=>true,"message" => "New Podcast Added Successfully!"];
         return response($response, 200);
@@ -81,19 +99,29 @@ class PodcastController extends Controller
         $update->subscription = $request->subscription;
         $update->save();
 
-        $gg = PodcastSubCategories::where('podcast_id',$update->id)->get();
+        $gg = PodcastCategory::where('podcast_id',$update->id)->get();
 
         foreach($gg as $item)
         {
-            PodcastSubCategories::where('id',$item->id)->delete();
+            PodcastCategory::where('id',$item->id)->delete();
         }
         
-        foreach($request->sub_category_id as $item)
-        {
-            $new1 = new PodcastSubCategories();
-            $new1->podcast_id = $update->id;
-            $new1->subcategory_id = $item;  
-            $new1->save();
+        // Create categories and subcategories records
+        foreach ($request->categories as $categoryData) {
+            $category = new PodcastCategory();
+            $category->podcast_id = $update->id;
+            $category->category_id = $categoryData['category_id'];
+            $category->save();
+    
+            foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                $subcategory = new PodcastSubCategories();
+                $subcategory->podcast_id = $update->id;
+                $subcategory->podcast_category_id = $category->id;
+                $subcategory->subcategory_id = $subcategoryId;
+                
+                $subcategory->save();
+            }
+
         }
 
         $response = ['status'=>true,"message" => "Podcast Updated Successfully!"];

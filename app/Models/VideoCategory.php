@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VideoSubCategories extends Model
+class VideoCategory extends Model
 {
     use HasFactory;
 
-    public function sub_category()
+    public function videoSubCat()
     {
-        return $this->belongsTo(SubCategory::class,'subcategory_id','id');
-    } 
+        return $this->hasMany(VideoSubCategories::class,'video_category_id','id');
+    }
 }

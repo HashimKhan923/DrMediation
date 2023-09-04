@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('video_sub_categories', function (Blueprint $table) {
+        Schema::create('podcast_sub_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreign('video_id')->references('id')->on('videos')->onDelete('cascade')->onUpdate('cascade');
-            $table->bigInteger('video_id')->unsigned()->nullable();
+            $table->foreign('podcast_id')->references('id')->on('podcasts')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('podcast_id')->unsigned()->nullable();
+            $table->foreign('podcast_category_id')->references('id')->on('podcast_categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('podcast_category_id')->unsigned()->nullable();
             $table->foreign('subcategory_id')->references('id')->on('sub_categories')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('subcategory_id')->unsigned()->nullable();
             $table->timestamps();
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('video_sub_categories');
+        Schema::dropIfExists('podcast_sub_categories');
     }
 };

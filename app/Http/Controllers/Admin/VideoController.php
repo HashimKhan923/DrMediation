@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Video;
+use App\Models\VideoCategory;
 use App\Models\VideoSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,6 @@ class VideoController extends Controller
         $new = new Video();
         $new->name = $request->name;
         $new->description = $request->description;
-        $new->category_id = $request->category_id;
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
             $filename= date('YmdHis').$file->getClientOriginalName();
@@ -41,13 +41,35 @@ class VideoController extends Controller
         $new->subscription = $request->subscription;
         $new->save();
 
-        foreach($request->sub_category_id as $item)
-        {
-            $new1 = new VideoSubCategories();
-            $new1->video_id = $new->id;
-            $new1->subcategory_id = $item;  
-            $new1->save();
+
+                    // Create categories and subcategories records
+        foreach ($request->categories as $categoryData) {
+            $category = new VideoCategory();
+            $category->video_id = $new->id;
+            $category->category_id = $categoryData['category_id'];
+            $category->save();
+    
+            foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                $subcategory = new VideoSubCategories();
+                $subcategory->video_id = $new->id;
+                $subcategory->video_category_id = $category->id;
+                $subcategory->subcategory_id = $subcategoryId;
+                
+                $subcategory->save();
+            }
+
         }
+
+
+
+
+        // foreach($request->sub_category_id as $item)
+        // {
+        //     $new1 = new VideoSubCategories();
+        //     $new1->video_id = $new->id;
+        //     $new1->subcategory_id = $item;  
+        //     $new1->save();
+        // }
 
         $response = ['status'=>true,"message" => "New Video Added Successfully!"];
         return response($response, 200);
@@ -81,20 +103,30 @@ class VideoController extends Controller
         $update->subscription = $request->subscription;
         $update->save();
 
-        $gg = VideoSubCategories::where('video_id',$update->id)->get();
+        $gg = VideoCategory::where('video_id',$update->id)->get();
 
         foreach($gg as $item)
         {
-            VideoSubCategories::where('id',$item->id)->delete();
+            VideoCategory::where('id',$item->id)->delete();
         }
         
-        foreach($request->sub_category_id as $item)
-        {
-            $new1 = new VideoSubCategories();
-            $new1->video_id = $update->id;
-            $new1->subcategory_id = $item;  
-            $new1->save();
-        }
+            // Create categories and subcategories records
+            foreach ($request->categories as $categoryData) {
+                $category = new VideoCategory();
+                $category->video_id = $update->id;
+                $category->category_id = $categoryData['category_id'];
+                $category->save();
+        
+                foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                    $subcategory = new VideoSubCategories();
+                    $subcategory->video_id = $update->id;
+                    $subcategory->video_category_id = $category->id;
+                    $subcategory->subcategory_id = $subcategoryId;
+                    
+                    $subcategory->save();
+                }
+    
+            }
 
         $response = ['status'=>true,"message" => "Video Updated Successfully!"];
         return response($response, 200);

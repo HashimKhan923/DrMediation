@@ -66,7 +66,6 @@ class AudioController extends Controller
         $new = new Audio();
         $new->name = $request->name;
         $new->description = $request->description;
-        $new->category_id = $request->category_id;
 
         if($request->file('thumbnail')){
             $file= $request->file('thumbnail');
@@ -140,19 +139,31 @@ class AudioController extends Controller
         $update->subscription = $request->subscription;
         $update->save();
 
-        $gg = AudioSubCategories::where('audio_id',$update->id)->get();
+        $gg = AudioCategory::where('audio_id',$update->id)->get();
 
         foreach($gg as $item)
         {
-            AudioSubCategories::where('id',$item->id)->delete();
+            AudioCategory::where('id',$item->id)->delete();
         }
         
-        foreach($request->sub_category_id as $item)
-        {
-            $new1 = new AudioSubCategories();
-            $new1->audio_id = $update->id;
-            $new1->subcategory_id = $item;  
-            $new1->save();
+        // Create categories and subcategories records
+        foreach ($request->categories as $categoryData) {
+            $category = new AudioCategory();
+            $category->audio_id = $update->id;
+            $category->category_id = $categoryData['category_id'];
+            $category->save();
+    
+            foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                $subcategory = new AudioSubCategories();
+                $subcategory->audio_id = $update->id;
+                $subcategory->audio_category_id = $category->id;
+                $subcategory->subcategory_id = $subcategoryId;
+                
+                $subcategory->save();
+            }
+    
+            // // Attach the category to the product
+            // $product->categories()->attach($category->id);
         }
 
         $response = ['status'=>true,"message" => "Audio Updated Successfully!"];
