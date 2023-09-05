@@ -14,7 +14,7 @@ class VideoController extends Controller
 {
     public function index($id)
     {
-        $Videos = Video::with('videoCat','videoSubCat.sub_category')->whereHas('videoCat', function ($query) use ($id){
+        $Videos = Video::with('videoCat.videoSubCat.sub_category')->whereHas('videoCat', function ($query) use ($id){
             $query->where('category_id',$id);
            })->get();
 

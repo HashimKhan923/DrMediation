@@ -14,7 +14,7 @@ class PodcastController extends Controller
 {
     public function index($id)
     {
-        $Podcast = Podcast::with('podcastCat','podcastSubCat.sub_category')->whereHas('podcastCat', function ($query) use ($id){
+        $Podcast = Podcast::with('podcastCat.podcastSubCat.sub_category')->whereHas('podcastCat', function ($query) use ($id){
             $query->where('category_id',$id);
            })->get();
 

@@ -84,8 +84,21 @@ class AuthController extends Controller
 
         $userData->biodata = $request->biodata;
         $userData->save();
-        
 
+
+        Mail::send(
+            'email.password-reset',
+            [
+                'user'=>$user,
+                'data'=>$userData,
+                //'last_name'=>$query->last_name
+            ], 
+        
+        function ($message) use ($query) {
+            $message->from(env('MAIL_USERNAME'));
+            $message->to('support@drmeditation.net');
+            $message->subject('New Advisor');
+        });
 
 
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
