@@ -33,10 +33,13 @@
                 </div>
             </div>
         </div>
-
+        <h2>Documents</h2>
         <!-- Document List Section -->
+
+        
+
         <div class="document-list">
-            <h2>Documents</h2>
+            <h4>Documents</h4>
             <ul class="list-group">
                 <li class="list-group-item">
                     <a href="#">Document 1</a>
@@ -50,6 +53,9 @@
                 <!-- Add more document items here -->
             </ul>
         </div>
+
+
+
     </div>
 
     <!-- Add Bootstrap JS scripts and jQuery link here (for Bootstrap functionality) -->

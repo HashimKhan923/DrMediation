@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class BlogCategory extends Model
 {
     use HasFactory;
+
+    public function blogSubCat()
+    {
+        return $this->hasMany(AudioSubCategories::class,'audio_category_id','id');
+    }
 }
