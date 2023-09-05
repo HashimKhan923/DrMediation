@@ -24,8 +24,7 @@ class VCVController extends Controller
         {
             $createOrupdate = new VCV();
         }
-        else
-        {
+
 
             $createOrupdate->voice = $request->voice_price;
             $createOrupdate->chat = $request->chat_price;
@@ -34,6 +33,6 @@ class VCVController extends Controller
 
             $response = ['status'=>true,"message" => 'Save Successfully!'];
             return response($response, 200);
-        }
+    
     }
 }

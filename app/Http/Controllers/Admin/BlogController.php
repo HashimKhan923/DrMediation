@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogSubCategories;
+use App\Models\BlogCategory;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
