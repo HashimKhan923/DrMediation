@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\AdvisorData;
 use Validator;
 use Hash;
+use Mail;
 
 class AuthController extends Controller
 {
