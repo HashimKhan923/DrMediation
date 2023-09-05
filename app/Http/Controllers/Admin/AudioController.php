@@ -193,6 +193,14 @@ class AudioController extends Controller
 
     }
 
+    public function soft_delete(Request $request)
+    {
+        AudioCategory::where('audio_id',$request->audio_id)->where('category_id',$request->category_id)->delete();
+
+        $response = ['status'=>true,"message" => "Audio Deleted Successfully!"];
+        return response($response, 200);
+    }
+
     public function changeStatus($id)
     {
         $status = Audio::where('id',$id)->first();
