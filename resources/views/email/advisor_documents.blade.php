@@ -39,20 +39,50 @@
         
 
         <div class="document-list">
-            <h4>Documents</h4>
+            <h4>Educations</h4>
             <ul class="list-group">
+            @if($data->education)    
+            @foreach($data->education as $item)
                 <li class="list-group-item">
-                    <a href="#">Document 1</a>
+                    <a href="https://api.drmeditation.net/storage/app/public/{{$item}}">Click Here to Download</a>
                 </li>
-                <li class="list-group-item">
-                    <a href="#">Document 2</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="#">Document 3</a>
-                </li>
+            @endforeach
+            @endif
                 <!-- Add more document items here -->
             </ul>
         </div>
+
+
+        <div class="document-list">
+            <h4>Certificates</h4>
+            <ul class="list-group">
+            @if($data->certificates)    
+            @foreach($data->certificates as $item)
+                <li class="list-group-item">
+                    <a href="https://api.drmeditation.net/storage/app/public/{{$item}}">Click Here to Download</a>
+                </li>
+            @endforeach
+            @endif
+                <!-- Add more document items here -->
+            </ul>
+        </div>
+
+
+        <div class="document-list">
+            <h4>Degrees</h4>
+            <ul class="list-group">
+            @if($data->degrees)       
+            @foreach($data->degrees as $item)
+                <li class="list-group-item">
+                    <a href="https://api.drmeditation.net/storage/app/public/{{$item}}">Click Here to Download</a>
+                </li>
+            @endforeach
+            @endif
+                <!-- Add more document items here -->
+            </ul>
+        </div>
+
+        
 
 
 

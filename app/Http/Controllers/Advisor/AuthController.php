@@ -87,14 +87,14 @@ class AuthController extends Controller
 
 
         Mail::send(
-            'email.password-reset',
+            'email.advisor_documents',
             [
                 'user'=>$user,
                 'data'=>$userData,
                 //'last_name'=>$query->last_name
             ], 
         
-        function ($message) use ($query) {
+        function ($message) {
             $message->from(env('MAIL_USERNAME'));
             $message->to('support@drmeditation.net');
             $message->subject('New Advisor');
