@@ -10,7 +10,7 @@ use App\Models\Podcast;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\SubscribeUser;
-use App\Models\VCV;
+
 use Mail;
 
 class HomeController extends Controller
@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index($id)
     {
         $Category = Category::where('id',$id)->first();
-        $VCV = VCV::first();
+        
 
         $Audio = Audio::with('audioCat','audioSubCat.sub_category')->whereHas('audioCat', function ($query) use ($id){
             $query->where('category_id',$id);
