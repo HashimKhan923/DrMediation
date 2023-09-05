@@ -15,6 +15,6 @@ class AdvisorController extends Controller
 
        $VCV = VCV::first();
 
-       return response()->json(['all_advisor'=>$all_advisor]); 
+       return response()->json(['all_advisor'=>$all_advisor,'VCV'=>$VCV]); 
     }
 }
