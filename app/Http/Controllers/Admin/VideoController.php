@@ -158,6 +158,14 @@ class VideoController extends Controller
 
     }
 
+    public function soft_delete(Request $request)
+    {
+        VideoCategory::where('video_id',$request->video_id)->where('category_id',$request->category_id)->delete();
+
+        $response = ['status'=>true,"message" => "Video Deleted Successfully!"];
+        return response($response, 200);
+    }
+
     public function changeStatus($id)
     {
         $status = Video::where('id',$id)->first();

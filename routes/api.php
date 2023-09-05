@@ -135,6 +135,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('edit/{id}','edit');
             Route::post('update','update');
             Route::get('delete/{id}','delete');
+            Route::post('soft_delete','soft_delete');
             Route::get('status/{id}','changeStatus');
         });
     });     
@@ -148,6 +149,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('edit/{id}','edit');
             Route::post('update','update');
             Route::get('delete/{id}','delete');
+            Route::post('soft_delete','soft_delete');
             Route::get('status/{id}','changeStatus');
         });
     });    
@@ -161,6 +163,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('edit/{id}','edit');
             Route::post('update','update');
             Route::get('delete/{id}','delete');
+            Route::post('soft_delete','soft_delete');
             Route::get('status/{id}','changeStatus');
         });
     }); 

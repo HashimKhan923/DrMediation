@@ -152,6 +152,14 @@ class PodcastController extends Controller
 
     }
 
+    public function soft_delete(Request $request)
+    {
+        PodcastCategory::where('podcast_id',$request->podcast_id)->where('category_id',$request->category_id)->delete();
+
+        $response = ['status'=>true,"message" => "Podcast Deleted Successfully!"];
+        return response($response, 200);
+    }
+
     public function changeStatus($id)
     {
         $status = Podcast::where('id',$id)->first();

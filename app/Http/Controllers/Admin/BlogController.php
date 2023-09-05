@@ -142,6 +142,14 @@ class BlogController extends Controller
 
     }
 
+    public function soft_delete(Request $request)
+    {
+        BlogCategory::where('blog_id',$request->blog_id)->where('category_id',$request->category_id)->delete();
+
+        $response = ['status'=>true,"message" => "Blog Deleted Successfully!"];
+        return response($response, 200);
+    }
+
     public function changeStatus($id)
     {
         $status = Blog::where('id',$id)->first();
