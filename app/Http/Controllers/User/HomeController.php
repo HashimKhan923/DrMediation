@@ -40,6 +40,6 @@ class HomeController extends Controller
 
         SubscribeUser::where('end_time','<=',now())->delete();
 
-        return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog,'Category'=>$Category,'VCV'=>$VCV]);
+        return response()->json(['Audio'=>$Audio,'Video'=>$Video,'Podcast'=>$Podcast,'Blog'=>$Blog,'Category'=>$Category]);
     }
 }
