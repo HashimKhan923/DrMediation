@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class BlogSubCategories extends Model
 {
     use HasFactory;
+
+    public function sub_category()
+    {
+        return $this->belongsTo(SubCategory::class,'subcategory_id','id');
+    } 
 }
