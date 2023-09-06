@@ -101,6 +101,18 @@ class AuthController extends Controller
             $message->subject('New Advisor');
         });
 
+        Mail::send(
+            'email.advisor_welcome',
+            [
+                'name'=>$user->name,
+            ], 
+        
+        function ($message) use ($user) {
+            $message->from(env('MAIL_USERNAME'));
+            $message->to($user->email);
+            $message->subject('Welcome');
+        });
+
 
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
         $response = ['status'=>true,"message" => "Register Successfully",'token' => $token];
