@@ -12,8 +12,8 @@
                 <table width="600" cellpadding="0" cellspacing="0">
                     <!-- Header Section -->
                     <tr>
-                        <td align="center" bgcolor="#007bff">
-                            <img src="https://example.com/dr-meditation-logo.png" alt="Dr. Meditation Logo" width="150" height="150" style="display: block; margin: 20px auto;">
+                        <td align="center" bgcolor="#DBEEC5">
+                            <img src="{{asset('drlogo.png')}}" alt="Dr. Meditation Logo" width="180" height="180" style="display: block; margin: 20px auto;">
                             <h1 style="color: #fff; font-size: 24px;">Welcome to Dr. Meditation</h1>
                         </td>
                     </tr>
