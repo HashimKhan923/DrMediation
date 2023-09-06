@@ -283,6 +283,15 @@ Route::group(['middleware' => ['auth:api']], function(){
         });
 
 
+                            /// Payment \\\
+
+        Route::group(['prefix' => 'payment/'], function() {
+            Route::controller(App\Http\Controllers\User\PaymentController::class)->group(function () {
+                Route::post('stripe','payment');     
+            });
+        });
+
+
                                     /// Advisors \\\
 
         Route::group(['prefix' => 'advisors/'], function() {
