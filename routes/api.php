@@ -222,7 +222,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::group(['prefix' => '/admin/term_condition/'], function() {
                     Route::controller(App\Http\Controllers\Admin\TermConditionController::class)->group(function () {
                         Route::get('show','index');
-                        Route::get('createOrUpdate','createOrUpdate');
+                        Route::post('createOrUpdate','createOrUpdate');
                     });
                 });  
         
@@ -232,7 +232,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::group(['prefix' => '/admin/privacy_policy/'], function() {
                     Route::controller(App\Http\Controllers\Admin\PrivacyPolicyController::class)->group(function () {
                         Route::get('show','index');
-                        Route::get('createOrUpdate','createOrUpdate');
+                        Route::post('createOrUpdate','createOrUpdate');
                     });
                 }); 
                 
@@ -241,7 +241,7 @@ Route::group(['middleware' => ['auth:api']], function(){
                 Route::group(['prefix' => '/admin/disclaimer/'], function() {
                     Route::controller(App\Http\Controllers\Admin\DisclaimerController::class)->group(function () {
                         Route::get('show','index');
-                        Route::get('createOrUpdate','createOrUpdate');
+                        Route::post('createOrUpdate','createOrUpdate');
                     });
                 });  
 
