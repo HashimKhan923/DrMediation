@@ -216,6 +216,36 @@ Route::group(['middleware' => ['auth:api']], function(){
         });     
 
 
+
+                /// TermCondition \\\
+
+                Route::group(['prefix' => '/admin/term_condition/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\TermConditionController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::get('createOrUpdate','createOrUpdate');
+                    });
+                });  
+        
+        
+                                                            /// PrivacyPolicy \\\
+        
+                Route::group(['prefix' => '/admin/privacy_policy/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\PrivacyPolicyController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::get('createOrUpdate','createOrUpdate');
+                    });
+                }); 
+                
+                                                                    /// Disclaimer \\\
+        
+                Route::group(['prefix' => '/admin/disclaimer/'], function() {
+                    Route::controller(App\Http\Controllers\Admin\DisclaimerController::class)->group(function () {
+                        Route::get('show','index');
+                        Route::get('createOrUpdate','createOrUpdate');
+                    });
+                });  
+
+
     /////////////////////////////////// User Routes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
@@ -297,6 +327,35 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::group(['prefix' => 'advisors/'], function() {
             Route::controller(App\Http\Controllers\User\AdvisorController::class)->group(function () {
                 Route::get('show','index');
+            });
+        });  
+
+
+                                            /// TermCondition \\\
+
+        Route::group(['prefix' => 'term_condition/'], function() {
+            Route::controller(App\Http\Controllers\User\TermConditionController::class)->group(function () {
+                Route::get('web/show','web_index');
+                Route::get('app/show','app_index');
+            });
+        });  
+
+
+                                                    /// PrivacyPolicy \\\
+
+        Route::group(['prefix' => 'privacy_policy/'], function() {
+            Route::controller(App\Http\Controllers\User\PrivacyPolicyController::class)->group(function () {
+                Route::get('web/show','web_index');
+                Route::get('app/show','app_index');
+            });
+        }); 
+        
+                                                            /// Disclaimer \\\
+
+        Route::group(['prefix' => 'disclaimer/'], function() {
+            Route::controller(App\Http\Controllers\User\DisclaimerController::class)->group(function () {
+                Route::get('web/show','web_index');
+                Route::get('app/show','app_index');
             });
         });  
 
