@@ -296,7 +296,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
         Route::group(['prefix' => 'booking/'], function() {
             Route::controller(App\Http\Controllers\User\BookingController::class)->group(function () {
-                Route::post('show','book');
+                Route::post('create','book');
             });
         });  
 
