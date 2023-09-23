@@ -41,4 +41,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function slots()
+    {
+        return $this->hasMany(Slot::class,'id','user_id');
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class,'id','user_id');
+    }
 }

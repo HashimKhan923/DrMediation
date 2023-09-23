@@ -29,6 +29,7 @@ class SurveyController extends Controller
             $new->save();
         }
 
+
         $response = ['status'=>true,"message" => "New Survey Added Successfully!"];
         return response($response, 200);
     }
