@@ -11,7 +11,7 @@ class AdvisorController extends Controller
 {
     public function index()
     {
-       $all_advisor = User::with('slots','services')->where('role_id',3)->get();
+       $all_advisor = User::with('slots')->where('role_id',3)->get();
 
        $VCV = VCV::first();
 
