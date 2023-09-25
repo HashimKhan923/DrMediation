@@ -46,11 +46,11 @@ class User extends Authenticatable
 
     public function slots()
     {
-        return $this->hasMany(Slot::class,'id','user_id');
+        return $this->hasMany(Slot::class,'user_id');
     }
 
     public function services()
     {
-        return $this->hasMany(Service::class,'id','user_id');
+        return $this->hasMany(Service::class,'user_id');
     }
 }
