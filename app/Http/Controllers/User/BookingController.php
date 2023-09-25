@@ -15,6 +15,7 @@ class BookingController extends Controller
         $new->user_id = $request->user_id;
         $new->service = $request->service;
         $new->slot_id = $request->slot_id;
+        $new->date = $request->date;
         $new->save();
 
         $response = ['status'=>true,"message" => "Booked Successfully!"];
