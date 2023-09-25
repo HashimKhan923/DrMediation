@@ -34,7 +34,7 @@ Route::post('/profile/update', 'App\Http\Controllers\AuthController@profile_upda
 /// admin Register
 Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@register');
 
-// Route::group(['middleware' => ['auth:api']], function(){
+Route::group(['middleware' => ['auth:api']], function(){
 
     
 
@@ -399,7 +399,7 @@ Route::post('/admin/register', 'App\Http\Controllers\Admin\AuthController@regist
             }); 
 
     
-// }); 
+}); 
 
 
                         /// user Register
