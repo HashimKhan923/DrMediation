@@ -8,11 +8,18 @@ use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\PaymentIntent;
+use App\Models\Booking;
 
 class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
+        $checkSlot = Booking::where('slot_id',$request->slot_id)->where('date',$request->date)->first();
+
+        if($checkSlot)
+        {
+            return response()->json(['message'=>'this slot is already booked!']);
+        }
         // Get the token, amount, and name from the request's input data
         $token = $request->input('token');
         $amount = $request->input('amount');
