@@ -251,6 +251,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
             Route::post('/profile', 'App\Http\Controllers\User\AuthController@profile_update');
             Route::get('/profile/check', 'App\Http\Controllers\User\AuthController@usercheck');
+            Route::get('/profile/delete/{id}', 'App\Http\Controllers\User\AuthController@delete');
             Route::get('/home/{id}','App\Http\Controllers\User\HomeController@index');
 
                                 
@@ -296,6 +297,7 @@ Route::group(['middleware' => ['auth:api']], function(){
 
         Route::group(['prefix' => 'booking/'], function() {
             Route::controller(App\Http\Controllers\User\BookingController::class)->group(function () {
+                Route::get('show/{id}','index');
                 Route::post('create','book');
             });
         });  

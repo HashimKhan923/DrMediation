@@ -11,6 +11,15 @@ use Mail;
 
 class BookingController extends Controller
 {
+
+    public function index($id)
+    {
+        $data = Booking::where('user_id',$id)->get();
+
+
+        return response()->json(['data'=>$data]);
+    }
+
     public function book(Request $request)
     {
         $new = new Booking();
