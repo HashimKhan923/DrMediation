@@ -12,8 +12,7 @@ class BookingController extends Controller
     {
         $data = Booking::with('advisor','user','service','slot')->where('advisor_id',$id)->get();
 
-        $response = ['status'=>true,"message" => "Status Changed Successfully!"];
-        return response($response, 200);
+        return response()->json(['data'=>$data]);
     }
 
     public function changeStatus($id)
