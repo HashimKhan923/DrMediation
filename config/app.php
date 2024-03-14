@@ -181,7 +181,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
+        // Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -208,10 +208,6 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-    'aliases' => [
-        // ...
-        'Image' => Intervention\Image\Facades\Image::class,
-    ],
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
