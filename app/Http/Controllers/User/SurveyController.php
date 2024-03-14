@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Survey;
+use App\Models\User;
+
 
 class SurveyController extends Controller
 {
