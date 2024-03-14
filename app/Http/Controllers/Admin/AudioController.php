@@ -32,15 +32,10 @@ class AudioController extends Controller
 
         if($request->file('thumbnail'))
         {
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('AudioThumbnail') . '/' . $filename . '.webp');
-            
-            $new->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('AudioThumbnail'),$filename);
+            $new->thumbnail = $filename;
         }
         if($request->file('audio')){
             $file= $request->audio;
@@ -99,15 +94,10 @@ class AudioController extends Controller
             {
                 unlink(public_path('AudioThumbnail/'.$update->thumbnail));
             }
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('AudioThumbnail') . '/' . $filename . '.webp');
-            
-            $update->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('AudioThumbnail'),$filename);
+            $update->thumbnail = $filename;
 
         }
         if($request->file('audio')){

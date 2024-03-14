@@ -23,15 +23,10 @@ class CategoryController extends Controller
         $new->name = $request->name;
         $new->description = $request->description;
         if($request->file('thumbnail')){
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('CategoryThumbnail') . '/' . $filename . '.webp');
-            
-            $new->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('CategoryThumbnail'),$filename);
+            $new->thumbnail = $filename;
         }
         $new->save();
 
@@ -58,15 +53,10 @@ class CategoryController extends Controller
                 unlink(public_path('CategoryThumbnail/'.$update->thumbnail));
             }
 
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('CategoryThumbnail') . '/' . $filename . '.webp');
-            
-            $update->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('CategoryThumbnail'),$filename);
+            $update->thumbnail = $filename;
         }
         $update->save();
 

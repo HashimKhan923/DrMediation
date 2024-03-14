@@ -31,15 +31,10 @@ class VideoController extends Controller
         $new->name = $request->name;
         $new->description = $request->description;
         if($request->file('thumbnail')){
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('VideoThumbnail') . '/' . $filename . '.webp');
-            
-            $new->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('VideoThumbnail'),$filename);
+            $new->thumbnail = $filename;
         }
         if($request->file('video')){
             $file= $request->video;
@@ -102,15 +97,10 @@ class VideoController extends Controller
             {
                 unlink(public_path('VideoThumbnail/'.$update->thumbnail));
             }
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('VideoThumbnail') . '/' . $filename . '.webp');
-            
-            $update->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('VideoThumbnail'),$filename);
+            $new->thumbnail = $filename;
         }
         if($request->file('video')){
             if(public_path('Video/'.$update->video))

@@ -30,15 +30,10 @@ class PodcastController extends Controller
         $new->name = $request->name;
         $new->description = $request->description;
         if($request->file('thumbnail')){
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('PodcastThumbnail') . '/' . $filename . '.webp');
-            
-            $new->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('PodcastThumbnail'),$filename);
+            $new->thumbnail = $filename;
         }
         if($request->file('podcast')){
             $file= $request->podcast;
@@ -97,15 +92,10 @@ class PodcastController extends Controller
             {
                 unlink(public_path('PodcastThumbnail/'.$update->thumbnail));
             }
-            $image = $request->thumbnail;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('PodcastThumbnail') . '/' . $filename . '.webp');
-            
-            $update->thumbnail = $filename . '.webp';
+            $file= $request->thumbnail;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('PodcastThumbnail'),$filename);
+            $update->thumbnail = $filename;
         }
         if($request->file('podcast')){
             if(public_path('Podcast/'.$update->audio))

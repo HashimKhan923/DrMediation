@@ -25,15 +25,10 @@ class BannerController extends Controller
         $new->name = $request->title; 
         $new->link = $request->link;
         if($request->file('image')){
-            $image = $request->image;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-            
-            $new->image = $filename . '.webp';
+            $file= $request->image;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Banner'),$filename);
+            $new->image = $filename;
         }
         $new->save();
 
@@ -81,15 +76,10 @@ class BannerController extends Controller
             {
                 unlink(public_path('Banner/'.$update->image));
             }
-            $image = $request->image;
-
-            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
-
-            $compressedImage = Image::make($image->getRealPath());
-            
-            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
-            
-            $update->image = $filename . '.webp';
+            $file= $request->image;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Banner'),$filename);
+            $new->image = $filename;
         }
         $update->save();
 
