@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Advisor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\User;
+use Mail;
 
 class BookingController extends Controller
 {
