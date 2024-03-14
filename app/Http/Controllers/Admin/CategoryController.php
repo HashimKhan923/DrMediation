@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
@@ -22,10 +23,15 @@ class CategoryController extends Controller
         $new->name = $request->name;
         $new->description = $request->description;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $new->thumbnail = $filename;
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('CategoryThumbnail') . '/' . $filename . '.webp');
+            
+            $new->thumbnail = $filename . '.webp';
         }
         $new->save();
 
@@ -46,10 +52,21 @@ class CategoryController extends Controller
         $update->name = $request->name;
         $update->description = $request->description;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $update->thumbnail = $filename;
+
+            if(public_path('CategoryThumbnail/'.$update->thumbnail))
+            {
+                unlink(public_path('CategoryThumbnail/'.$update->thumbnail));
+            }
+
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('CategoryThumbnail') . '/' . $filename . '.webp');
+            
+            $update->thumbnail = $filename . '.webp';
         }
         $update->save();
 
@@ -60,10 +77,9 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $file = Category::find($id);
-        $image_path = 'app/public'.$file->thumbnail;
-        if(Storage::exists($image_path))
+        if(public_path('CategoryThumbnail/'.$file->thumbnail))
         {
-            Storage::delete($image_path);
+            unlink(public_path('CategoryThumbnail/'.$file->thumbnail));
         }
 
       $file->delete();

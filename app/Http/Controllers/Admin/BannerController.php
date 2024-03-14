@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class BannerController extends Controller
 {
@@ -24,10 +25,15 @@ class BannerController extends Controller
         $new->name = $request->title; 
         $new->link = $request->link;
         if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $new->image = $filename;
+            $image = $request->image;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
+            
+            $new->image = $filename . '.webp';
         }
         $new->save();
 
@@ -41,10 +47,9 @@ class BannerController extends Controller
     public function delete($id)
     {
         $file = Banner::find($id);
-        $image_path = 'app/public'.$file->image;
-        if(Storage::exists($image_path))
+        if(public_path('Banner/'.$file->image))
         {
-            Storage::delete($image_path);
+            unlink(public_path('Banner/'.$file->image));
         }
 
       $file->delete();
@@ -72,10 +77,19 @@ class BannerController extends Controller
         $update->name = $request->title;
         $update->link = $request->link;
         if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $update->image = $filename;
+            if(public_path('Banner/'.$update->image))
+            {
+                unlink(public_path('Banner/'.$update->image));
+            }
+            $image = $request->image;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('Banner') . '/' . $filename . '.webp');
+            
+            $update->image = $filename . '.webp';
         }
         $update->save();
 

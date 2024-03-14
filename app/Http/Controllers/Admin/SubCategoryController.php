@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\SubCategory;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class SubCategoryController extends Controller
 {
@@ -23,10 +25,15 @@ class SubCategoryController extends Controller
         $new->name = $request->name;
         $new->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $new->thumbnail = $filename;
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('SubCategoryThumbnail') . '/' . $filename . '.webp');
+            
+            $new->thumbnail = $filename . '.webp';
         }
         $new->save();
 
@@ -47,10 +54,19 @@ class SubCategoryController extends Controller
         $update->name = $request->name;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $update->thumbnail = $filename;
+            if(public_path('SubCategoryThumbnail/'.$update->thumbnail))
+            {
+                unlink(public_path('SubCategoryThumbnail/'.$update->thumbnail));
+            }
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('SubCategoryThumbnail') . '/' . $filename . '.webp');
+            
+            $update->thumbnail = $filename . '.webp';
         }
         $update->save();
 
@@ -61,10 +77,9 @@ class SubCategoryController extends Controller
     public function delete($id)
     {
         $file = SubCategory::find($id);
-        $image_path = 'app/public'.$file->thumbnail;
-        if(Storage::exists($image_path))
+        if(public_path('SubCategoryThumbnail/'.$file->thumbnail))
         {
-            Storage::delete($image_path);
+            unlink(public_path('SubCategoryThumbnail/'.$file->thumbnail));
         }
 
       $file->delete();

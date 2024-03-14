@@ -9,6 +9,8 @@ use App\Models\VideoCategory;
 use App\Models\VideoSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class VideoController extends Controller
 {
@@ -29,15 +31,20 @@ class VideoController extends Controller
         $new->name = $request->name;
         $new->description = $request->description;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $new->thumbnail = $filename;
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('VideoThumbnail') . '/' . $filename . '.webp');
+            
+            $new->thumbnail = $filename . '.webp';
         }
         if($request->file('video')){
-            $file= $request->file('video');
+            $file= $request->video;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Video'),$filename);
             $new->video = $filename;
         }
         $new->subscription = $request->subscription;
@@ -91,15 +98,28 @@ class VideoController extends Controller
         $update->description = $request->description;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $update->thumbnail = $filename;
+            if(public_path('VideoThumbnail/'.$update->thumbnail))
+            {
+                unlink(public_path('VideoThumbnail/'.$update->thumbnail));
+            }
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('VideoThumbnail') . '/' . $filename . '.webp');
+            
+            $update->thumbnail = $filename . '.webp';
         }
         if($request->file('video')){
-            $file= $request->file('video');
+            if(public_path('Video/'.$update->video))
+            {
+                unlink(public_path('Video/'.$update->video));
+            }
+            $file= $request->video;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Video'),$filename);
             $update->video = $filename;
         }
         $update->subscription = $request->subscription;
@@ -137,18 +157,15 @@ class VideoController extends Controller
     public function delete($id)
     {
       $file = Video::find($id);
-          
-          $image_path = 'app/public'.$file->thumbnail;
-          if(Storage::exists($image_path))
-          {
-              Storage::delete($image_path);
-          }
+      if(public_path('VideoThumbnail/'.$file->thumbnail))
+      {
+          unlink(public_path('VideoThumbnail/'.$file->thumbnail));
+      }
 
-          $video_path = 'app/public'.$file->video;
-          if(Storage::exists($video_path))
-          {
-              Storage::delete($video_path);
-          }
+      if(public_path('Video/'.$file->video))
+      {
+          unlink(public_path('Video/'.$file->video));
+      }
 
         $file->delete();
         $response = ['status'=>true,"message" => "Video Deleted Successfully!"];

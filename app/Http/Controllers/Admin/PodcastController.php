@@ -9,6 +9,7 @@ use App\Models\PodcastCategory;
 use App\Models\PodcastSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PodcastController extends Controller
 {
@@ -29,15 +30,20 @@ class PodcastController extends Controller
         $new->name = $request->name;
         $new->description = $request->description;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $new->thumbnail = $filename;
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('PodcastThumbnail') . '/' . $filename . '.webp');
+            
+            $new->thumbnail = $filename . '.webp';
         }
         if($request->file('podcast')){
-            $file= $request->file('podcast');
+            $file= $request->podcast;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Podcast'),$filename);
             $new->podcast = $filename;
         }
         $new->subscription = $request->subscription;
@@ -87,15 +93,29 @@ class PodcastController extends Controller
         $update->description = $request->description;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
-            $update->thumbnail = $filename;
+            if(public_path('PodcastThumbnail/'.$update->thumbnail))
+            {
+                unlink(public_path('PodcastThumbnail/'.$update->thumbnail));
+            }
+            $image = $request->thumbnail;
+
+            $filename = date('YmdHis').uniqid().$image->getClientOriginalName();
+
+            $compressedImage = Image::make($image->getRealPath());
+            
+            $compressedImage->encode('webp')->save(public_path('PodcastThumbnail') . '/' . $filename . '.webp');
+            
+            $update->thumbnail = $filename . '.webp';
         }
         if($request->file('podcast')){
-            $file= $request->file('podcast');
+            if(public_path('Podcast/'.$update->audio))
+            {
+                unlink(public_path('Podcast/'.$update->audio));
+            }
+
+            $file= $request->audio;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('Podcast'),$filename);
             $update->podcast = $filename;
         }
         $update->subscription = $request->subscription;
@@ -134,17 +154,15 @@ class PodcastController extends Controller
     {
       $file = Podcast::find($id);
       
-          $image_path = 'app/public'.$file->thumbnail;
-          if(Storage::exists($image_path))
-          {
-              Storage::delete($image_path);
-          }
+      if(public_path('PodcastThumbnail/'.$file->thumbnail))
+      {
+          unlink(public_path('PodcastThumbnail/'.$file->thumbnail));
+      }
 
-          $podcast_path = 'app/public'.$file->podcast;
-          if(Storage::exists($podcast_path))
-          {
-              Storage::delete($podcast_path);
-          }
+      if(public_path('Podcast/'.$file->podcast))
+      {
+          unlink(public_path('Podcast/'.$file->podcast));
+      }
 
         $file->delete();
         $response = ['status'=>true,"message" => "Podcast Deleted Successfully!"];
