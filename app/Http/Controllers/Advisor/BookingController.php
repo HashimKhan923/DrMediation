@@ -37,4 +37,23 @@ class BookingController extends Controller
         return response($response, 200);
 
     }
+
+    public function send_link(Request $request)
+    {
+
+        $user = User::where('id',$request->user_id)->first();
+
+        Mail::send(
+            'email.call_link',
+            [
+                'name'=>$user->name,
+                'link'=>$request->link
+            ], 
+        
+        function ($message) use ($user) {
+            $message->from(env('MAIL_USERNAME'));
+            $message->to($user->email);
+            $message->subject('Confirm Booking');
+        });
+    }
 }

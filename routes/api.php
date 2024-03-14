@@ -392,7 +392,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::group(['prefix' => '/advisor/booking/'], function() {
                 Route::controller(App\Http\Controllers\Advisor\BookingController::class)->group(function () {
                     Route::get('show/{id}','index');
-                    // Route::post('create','createOrupdate');
+                    Route::post('send_link','send_link');
                     // Route::get('edit/{id}','edit');
                     // Route::post('update','update');
                     // Route::get('delete/{id}','delete');

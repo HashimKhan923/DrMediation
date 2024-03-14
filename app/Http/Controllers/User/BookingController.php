@@ -34,7 +34,7 @@ class BookingController extends Controller
 
         $user = User::where('id',$new->user_id)->first();
         $advisor = User::where('id',$new->advisor_id)->first();
-        $slot = Slot::where('id',$new->slot_id)->first();
+        $slot = Slot::where('id',$new->slot_id)->first();      
 
 
         Mail::send(
