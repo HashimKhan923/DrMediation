@@ -29,6 +29,23 @@ class SurveyController extends Controller
             $new->save();
         }
 
+        $save_pdf = User::where('id',$request->user_id)->first();
+
+        if($request->file('survey_pdf')){
+
+            if(public_path('SurveyPdf/'.$save_pdf->survey_pdf))
+            {
+                unlink(public_path('SurveyPdf/'.$save_pdf->survey_pdf));
+            }
+
+            $file= $request->survey_pdf;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('SurveyPdf'),$filename);
+            $save_pdf->survey_pdf = $filename;
+            $save_pdf->save();
+        }
+
+
 
         $response = ['status'=>true,"message" => "New Survey Added Successfully!"];
         return response($response, 200);
