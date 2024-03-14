@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Service::class,'advisor_id');
     }
+
+    public function AdvisorData()
+    {
+        return $this->hasOne(AdvisorData::class,'user_id');
+    }
 }
