@@ -38,6 +38,7 @@
                             <h4>Service Details</h4>
                             <ul>
                                 <li>Name : {{$service}}</li>
+                                <li>Price : {{$service_price}}</li>
                             </ul>
                             <p>At Dr. Meditation, we are dedicated to helping people lead healthier and happier lives through mindfulness and meditation. Your participation is important to us, and we are excited to have you join us.</p>
                             <p>If you have any questions or need further information, please don't hesitate to contact us.</p>
