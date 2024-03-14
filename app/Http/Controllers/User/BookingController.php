@@ -25,7 +25,8 @@ class BookingController extends Controller
         $new = new Booking();
         $new->advisor_id = $request->advisor_id;
         $new->user_id = $request->user_id;
-        $new->service = $request->service;
+        $new->service_type = $request->service_type;
+        $new->service_price = $request->service_price;
         $new->slot_id = $request->slot_id;
         $new->date = $request->date;
         $new->save();
@@ -42,7 +43,8 @@ class BookingController extends Controller
                 'name'=>$user->name,
                 'advisor'=>$advisor,
                 'slot'=>$slot,
-                'service'=>$new->service,
+                'service'=>$new->service_type,
+                'service_price'=>$new->service_price,
                 'date'=>$new->date,
             ], 
         
