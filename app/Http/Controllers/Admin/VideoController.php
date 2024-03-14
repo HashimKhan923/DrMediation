@@ -93,20 +93,20 @@ class VideoController extends Controller
         $update->description = $request->description;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            if(public_path('VideoThumbnail/'.$update->thumbnail))
-            {
-                unlink(public_path('VideoThumbnail/'.$update->thumbnail));
-            }
+            // if(public_path('VideoThumbnail/'.$update->thumbnail))
+            // {
+            //     unlink(public_path('VideoThumbnail/'.$update->thumbnail));
+            // }
             $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('VideoThumbnail'),$filename);
             $new->thumbnail = $filename;
         }
         if($request->file('video')){
-            if(public_path('Video/'.$update->video))
-            {
-                unlink(public_path('Video/'.$update->video));
-            }
+            // if(public_path('Video/'.$update->video))
+            // {
+            //     unlink(public_path('Video/'.$update->video));
+            // }
             $file= $request->video;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('Video'),$filename);

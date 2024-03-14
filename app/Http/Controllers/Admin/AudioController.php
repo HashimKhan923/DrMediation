@@ -90,10 +90,10 @@ class AudioController extends Controller
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
 
-            if(public_path('AudioThumbnail/'.$update->thumbnail))
-            {
-                unlink(public_path('AudioThumbnail/'.$update->thumbnail));
-            }
+            // if(public_path('AudioThumbnail/'.$update->thumbnail))
+            // {
+            //     unlink(public_path('AudioThumbnail/'.$update->thumbnail));
+            // }
             $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('AudioThumbnail'),$filename);

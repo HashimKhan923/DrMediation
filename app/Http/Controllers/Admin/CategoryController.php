@@ -48,10 +48,10 @@ class CategoryController extends Controller
         $update->description = $request->description;
         if($request->file('thumbnail')){
 
-            if(public_path('CategoryThumbnail/'.$update->thumbnail))
-            {
-                unlink(public_path('CategoryThumbnail/'.$update->thumbnail));
-            }
+            // if(public_path('CategoryThumbnail/'.$update->thumbnail))
+            // {
+            //     unlink(public_path('CategoryThumbnail/'.$update->thumbnail));
+            // }
 
             $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();

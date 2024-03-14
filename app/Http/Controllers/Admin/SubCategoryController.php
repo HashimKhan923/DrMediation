@@ -49,10 +49,10 @@ class SubCategoryController extends Controller
         $update->name = $request->name;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            if(public_path('SubCategoryThumbnail/'.$update->thumbnail))
-            {
-                unlink(public_path('SubCategoryThumbnail/'.$update->thumbnail));
-            }
+            // if(public_path('SubCategoryThumbnail/'.$update->thumbnail))
+            // {
+            //     unlink(public_path('SubCategoryThumbnail/'.$update->thumbnail));
+            // }
             $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('SubCategoryThumbnail'),$filename);

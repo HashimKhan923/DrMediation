@@ -88,20 +88,20 @@ class PodcastController extends Controller
         $update->description = $request->description;
         $update->category_id = $request->category_id;
         if($request->file('thumbnail')){
-            if(public_path('PodcastThumbnail/'.$update->thumbnail))
-            {
-                unlink(public_path('PodcastThumbnail/'.$update->thumbnail));
-            }
+            // if(public_path('PodcastThumbnail/'.$update->thumbnail))
+            // {
+            //     unlink(public_path('PodcastThumbnail/'.$update->thumbnail));
+            // }
             $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('PodcastThumbnail'),$filename);
             $update->thumbnail = $filename;
         }
         if($request->file('podcast')){
-            if(public_path('Podcast/'.$update->audio))
-            {
-                unlink(public_path('Podcast/'.$update->audio));
-            }
+            // if(public_path('Podcast/'.$update->audio))
+            // {
+            //     unlink(public_path('Podcast/'.$update->audio));
+            // }
 
             $file= $request->audio;
             $filename= date('YmdHis').$file->getClientOriginalName();

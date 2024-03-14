@@ -72,10 +72,10 @@ class BannerController extends Controller
         $update->name = $request->title;
         $update->link = $request->link;
         if($request->file('image')){
-            if(public_path('Banner/'.$update->image))
-            {
-                unlink(public_path('Banner/'.$update->image));
-            }
+            // if(public_path('Banner/'.$update->image))
+            // {
+            //     unlink(public_path('Banner/'.$update->image));
+            // }
             $file= $request->image;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('Banner'),$filename);

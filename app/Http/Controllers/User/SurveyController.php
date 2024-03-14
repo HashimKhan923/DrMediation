@@ -35,10 +35,10 @@ class SurveyController extends Controller
 
         if($request->file('survey_pdf')){
 
-            // if(public_path('SurveyPdf/'.$save_pdf->survey_pdf))
-            // {
-            //     unlink(public_path('SurveyPdf/'.$save_pdf->survey_pdf));
-            // }
+            if($save_pdf->survey_pdf)
+            {
+                unlink(public_path('SurveyPdf/'.$save_pdf->survey_pdf));
+            }
 
             $file= $request->survey_pdf;
             $filename= date('YmdHis').$file->getClientOriginalName();
