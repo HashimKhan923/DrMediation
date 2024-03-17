@@ -23,5 +23,10 @@ class Booking extends Model
     {
         return $this->belongsTo(Slot::class,'slot_id','id');
     } 
+
+    public function note()
+    {
+        return $this->hasOne(BookingNote::class,'booking_id','id');
+    } 
     use HasFactory;
 }

@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
     Route::get('/admin/profile/check', 'App\Http\Controllers\Admin\AuthController@usercheck');
 
-    Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardController@index');
+    Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardControleer@index');
 
 
 
@@ -372,6 +372,9 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('advisor/slot/delete/{id}','App\Http\Controllers\Advisor\SlotController@delete');
     Route::get('advisor/slot/status/{id}','App\Http\Controllers\Advisor\SlotController@changeStatus');
 
+    Route::get('/advisor/dashboard','App\Http\Controllers\Advisor\DashboardControleer@index');
+
+
 
                                     /// Service \\\
 
@@ -397,6 +400,14 @@ Route::group(['middleware' => ['auth:api']], function(){
                     // Route::post('update','update');
                     // Route::get('delete/{id}','delete');
                     Route::get('status/{id}','changeStatus');
+                });
+            }); 
+
+                                                            /// BookingNote \\\
+
+            Route::group(['prefix' => '/advisor/booking_note/'], function() {
+                Route::controller(App\Http\Controllers\Advisor\BookingNoteController::class)->group(function () {
+                    Route::post('save','createOrupdate');
                 });
             }); 
 

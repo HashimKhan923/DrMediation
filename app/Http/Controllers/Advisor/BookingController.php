@@ -12,7 +12,7 @@ class BookingController extends Controller
 {
     public function index($id)
     {
-        $data = Booking::with('advisor','user','service','slot')->where('advisor_id',$id)->get();
+        $data = Booking::with('advisor','user','service','slot','note')->where('advisor_id',$id)->get();
 
         return response()->json(['data'=>$data]);
     }

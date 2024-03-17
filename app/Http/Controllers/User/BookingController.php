@@ -14,7 +14,7 @@ class BookingController extends Controller
 
     public function index($id)
     {
-        $data = Booking::where('user_id',$id)->get();
+        $data = Booking::with('note')->where('user_id',$id)->get();
 
 
         return response()->json(['data'=>$data]);

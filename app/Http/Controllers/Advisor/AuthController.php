@@ -31,7 +31,12 @@ class AuthController extends Controller
         $user->phone_number = $request->phone;
         $user->password = Hash::make($request->password);
         $user->role_id = 3;
-        // $user->is_active = 1;
+        if($request->file('image')){
+            $file= $request->image;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('Profile'),$filename);
+            $user->image = $filename;
+        }        
         $user->save();
 
         $userData = new AdvisorData();
