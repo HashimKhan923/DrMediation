@@ -57,5 +57,5 @@ class BookingController extends Controller
             $message->to($user->email);
             $message->subject('Confirm Booking');
         });
-    }
+    } 
 }
