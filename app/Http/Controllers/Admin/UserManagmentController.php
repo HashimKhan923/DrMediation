@@ -44,4 +44,14 @@ class UserManagmentController extends Controller
 
     }
 
+    public function is_phone($id)
+    {
+        $update=User::where('phone_number',$id)->first();
+        $update->is_phone = 1;
+        $update->save();
+
+        $response = ['status'=>true,"message" => "Phone number verifed Successfully!"];
+        return response($response, 200);
+    }
+
 }
