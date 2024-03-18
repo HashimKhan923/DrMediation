@@ -46,7 +46,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('/logout', 'App\Http\Controllers\AuthController@logout');
     Route::get('/admin/profile/check', 'App\Http\Controllers\Admin\AuthController@usercheck');
 
-    Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardControleer@index');
+    Route::get('/admin/dashboard','App\Http\Controllers\Admin\DashboardContoleer@index');
 
 
 
@@ -200,6 +200,7 @@ Route::group(['middleware' => ['auth:api']], function(){
             Route::get('show','all_advisors');
             Route::get('delete/{id}','delete');
             Route::get('status/{id}','changeStatus');
+            Route::get('phone_verify/{id}','is_phone');
             Route::get('verify/{id}','changeVerificationStatus');
         });
     }); 
