@@ -373,7 +373,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     Route::get('advisor/slot/delete/{id}','App\Http\Controllers\Advisor\SlotController@delete');
     Route::get('advisor/slot/status/{id}','App\Http\Controllers\Advisor\SlotController@changeStatus');
 
-    Route::get('/advisor/dashboard/{advisor_id}','App\Http\Controllers\Advisor\DashboardControleer@index');
+    Route::get('/advisor/dashboard/{advisor_id}','App\Http\Controllers\Advisor\DashboardContoleer@index');
 
 
 
