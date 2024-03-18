@@ -30,6 +30,7 @@ class BlogController extends Controller
         $new->author = $request->author;
         $new->subscription =$request->subscription;
         if($request->file('thumbnail')){
+
             $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('BlogThumbnail'),$filename);
@@ -106,14 +107,14 @@ class BlogController extends Controller
 
         
         // Create categories and subcategories records
-        if($request->categories)
+        if($request->categories != null)
         {
             foreach ($request->categories as $categoryData) {
                 $category = new BlogCategory();
                 $category->blog_id = $update->id;
                 $category->category_id = $categoryData['category_id'];
                 $category->save();
-                    if($categoryData['subcategory_id'])
+                    if($categoryData['subcategory_id'] != null)
                     {
                         foreach ($categoryData['subcategory_id'] as $subcategoryId) {
                             $subcategory = new BlogSubCategories();
