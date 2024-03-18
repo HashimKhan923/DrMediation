@@ -96,30 +96,37 @@ class BlogController extends Controller
         $update->save();
 
         $gg = BlogCategory::where('blog_id',$update->id)->get();
-
-        foreach($gg as $item)
+        if($gg)
         {
-            BlogCategory::where('id',$item->id)->delete();
+            foreach($gg as $item)
+            {
+                BlogCategory::where('id',$item->id)->delete();
+            }
         }
+
         
         // Create categories and subcategories records
-        foreach ($request->categories as $categoryData) {
-            $category = new BlogCategory();
-            $category->blog_id = $update->id;
-            $category->category_id = $categoryData['category_id'];
-            $category->save();
+        if($request->categories)
+        {
+            foreach ($request->categories as $categoryData) {
+                $category = new BlogCategory();
+                $category->blog_id = $update->id;
+                $category->category_id = $categoryData['category_id'];
+                $category->save();
+        
+                foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                    $subcategory = new BlogSubCategories();
+                    $subcategory->blog_id = $update->id;
+                    $subcategory->blog_category_id = $category->id;
+                    $subcategory->subcategory_id = $subcategoryId;
+                    
+                    $subcategory->save();
+                }
+        
     
-            foreach ($categoryData['subcategory_id'] as $subcategoryId) {
-                $subcategory = new BlogSubCategories();
-                $subcategory->blog_id = $update->id;
-                $subcategory->blog_category_id = $category->id;
-                $subcategory->subcategory_id = $subcategoryId;
-                
-                $subcategory->save();
             }
-    
-
         }
+
 
         $response = ['status'=>true,"message" => "Blog updated Successfully!"];
         return response($response, 200);
