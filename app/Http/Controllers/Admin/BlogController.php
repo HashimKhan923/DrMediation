@@ -138,32 +138,18 @@ class BlogController extends Controller
 
     public function delete($id)
     {
-        $file = Blog::find($id);
-        if(!$file) {
-            $response = ['status' => false, "message" => "Blog not found"];
-            return response($response, 404);
-        }
-    
-        if ($file->thumbnail) {
-            $thumbnailPath = public_path('BlogThumbnail/' . $file->thumbnail);
-            if (file_exists($thumbnailPath)) {
-                if (unlink($thumbnailPath)) {
-                    $file->delete();
-                    $response = ['status' => true, "message" => "Blog Deleted Successfully!"];
-                    return response($response, 200);
-                } else {
-                    $response = ['status' => false, "message" => "Failed to delete file"];
-                    return response($response, 500);
-                }
-            } else {
-                $response = ['status' => false, "message" => "Thumbnail file not found"];
-                return response($response, 404);
-            }
-        }
-    
+      $file = Blog::find($id);
+      if($file->thumbnail)
+      {
+          unlink(public_path('BlogThumbnail/'.$file->thumbnail));
+      }
+
         $file->delete();
-        $response = ['status' => true, "message" => "Blog Deleted Successfully!"];
+        $response = ['status'=>true,"message" => "Blog Deleted Successfully!"];
         return response($response, 200);
+
+
+
     }
 
     public function soft_delete(Request $request)
