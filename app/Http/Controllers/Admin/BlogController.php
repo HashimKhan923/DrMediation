@@ -30,9 +30,9 @@ class BlogController extends Controller
         $new->author = $request->author;
         $new->subscription =$request->subscription;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
+            $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('BlogThumbnail'),$filename);
             $new->thumbnail = $filename;
         }
         $new->save();
@@ -88,9 +88,9 @@ class BlogController extends Controller
         $update->author = $request->author;
         $update->subscription =$request->subscription;
         if($request->file('thumbnail')){
-            $file= $request->file('thumbnail');
+            $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->storeAs('public', $filename);
+            $file->move(public_path('BlogThumbnail'),$filename);
             $update->thumbnail = $filename;
         }
         $update->save();
@@ -128,10 +128,9 @@ class BlogController extends Controller
     public function delete($id)
     {
       $file = Blog::find($id);
-      $image_path = 'app/public'.$file->thumbnail;
-      if(Storage::exists($image_path))
+      if(public_path('BlogThumbnail/'.$file->thumbnail))
       {
-          Storage::delete($image_path);
+          unlink(public_path('BlogThumbnail/'.$file->thumbnail));
       }
 
         $file->delete();
