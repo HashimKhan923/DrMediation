@@ -219,6 +219,16 @@ Route::group(['middleware' => ['auth:api']], function(){
 
 
 
+                                    /// Booking \\\
+
+        Route::group(['prefix' => '/admin/booking/'], function() {
+            Route::controller(App\Http\Controllers\Admin\BookingController::class)->group(function () {
+                Route::get('show','index');
+            });
+        });  
+
+
+
                 /// TermCondition \\\
 
                 Route::group(['prefix' => '/admin/term_condition/'], function() {
