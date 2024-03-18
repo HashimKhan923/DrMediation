@@ -188,6 +188,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::controller(App\Http\Controllers\Admin\UserManagmentController::class)->group(function () {
             Route::get('show','all_users');
             Route::get('delete/{id}','delete');
+            Route::get('phone_verify/{id}','is_phone');
             Route::get('status/{id}','changeStatus');
         });
     }); 
