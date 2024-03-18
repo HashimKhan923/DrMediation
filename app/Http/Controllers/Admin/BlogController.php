@@ -139,7 +139,7 @@ class BlogController extends Controller
     public function delete($id)
     {
       $file = Blog::find($id);
-      if(public_path('BlogThumbnail/'.$file->thumbnail))
+      if($file->thumbnail)
       {
           unlink(public_path('BlogThumbnail/'.$file->thumbnail));
       }
