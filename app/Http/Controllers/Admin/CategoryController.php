@@ -28,6 +28,12 @@ class CategoryController extends Controller
             $file->move(public_path('CategoryThumbnail'),$filename);
             $new->thumbnail = $filename;
         }
+        if($request->file('banner')){
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('CategoryBanner'),$filename);
+            $new->banner = $filename;
+        }
         $new->save();
 
         $response = ['status'=>true,"message" => "New Category Added Successfully!"];
@@ -58,6 +64,19 @@ class CategoryController extends Controller
             $file->move(public_path('CategoryThumbnail'),$filename);
             $update->thumbnail = $filename;
         }
+
+        if($request->file('banner')){
+
+            // if(public_path('Categorybanner/'.$update->banner))
+            // {
+            //     unlink(public_path('Categorybanner/'.$update->banner));
+            // }
+
+            $file= $request->banner;
+            $filename= date('YmdHis').$file->getClientOriginalName();
+            $file->move(public_path('CategoryBanner'),$filename);
+            $update->banner = $filename;
+        }
         $update->save();
 
         $response = ['status'=>true,"message" => "Category Updated Successfully!"];
@@ -70,6 +89,10 @@ class CategoryController extends Controller
         if(public_path('CategoryThumbnail/'.$file->thumbnail))
         {
             unlink(public_path('CategoryThumbnail/'.$file->thumbnail));
+        }
+        if(public_path('CategoryBanner/'.$file->banner))
+        {
+            unlink(public_path('CategoryBanner/'.$file->banner));
         }
 
       $file->delete();
