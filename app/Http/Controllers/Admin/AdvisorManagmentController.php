@@ -55,7 +55,7 @@ class AdvisorManagmentController extends Controller
 
     public function is_phone($id)
     {
-        $update=User::where('phone_number',$id)->first();
+        $update=User::where('id',$id)->first();
         $update->is_phone = 1;
         $update->save();
 
