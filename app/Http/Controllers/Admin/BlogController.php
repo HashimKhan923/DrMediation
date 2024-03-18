@@ -113,15 +113,18 @@ class BlogController extends Controller
                 $category->blog_id = $update->id;
                 $category->category_id = $categoryData['category_id'];
                 $category->save();
-        
-                foreach ($categoryData['subcategory_id'] as $subcategoryId) {
-                    $subcategory = new BlogSubCategories();
-                    $subcategory->blog_id = $update->id;
-                    $subcategory->blog_category_id = $category->id;
-                    $subcategory->subcategory_id = $subcategoryId;
-                    
-                    $subcategory->save();
-                }
+                    if($categoryData['subcategory_id'])
+                    {
+                        foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                            $subcategory = new BlogSubCategories();
+                            $subcategory->blog_id = $update->id;
+                            $subcategory->blog_category_id = $category->id;
+                            $subcategory->subcategory_id = $subcategoryId;
+                            
+                            $subcategory->save();
+                        }
+                    }
+
         
     
             }
