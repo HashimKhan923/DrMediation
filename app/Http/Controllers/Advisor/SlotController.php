@@ -10,7 +10,7 @@ class SlotController extends Controller
 {
     public function index($id)
     {
-         $Slot=Slot::where('user_id',$id)->get();
+         $Slot=Slot::with('day')->where('user_id',$id)->get();
 
          return response()->json(['Slot'=>$Slot]);
     }
