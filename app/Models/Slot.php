@@ -13,4 +13,9 @@ class Slot extends Model
     {
         return $this->belongsTo(Day::class,'day_id','id');
     }
+
+    public function booking()
+    {
+        return $this->hasMany(Booking::class,'slot_id');
+    }
 }

@@ -12,7 +12,7 @@ class AdvisorController extends Controller
 {
     public function index()
     {  $BookedSlots = Booking::all();
-       $all_advisor = User::with('slots.day')->where('role_id',3)->where('is_active',1)->where('is_verify',1)->get();
+       $all_advisor = User::with('slots.day','slots.booking')->where('role_id',3)->where('is_active',1)->where('is_verify',1)->get();
 
        $VCV = VCV::first();
 
