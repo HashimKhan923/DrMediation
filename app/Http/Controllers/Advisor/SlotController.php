@@ -17,12 +17,12 @@ class SlotController extends Controller
 
     public function create(Request $request)
     {
-        foreach($request->day as $day)
+        foreach($request->time as $time)
         {
             $new = new Slot();
             $new->user_id = $request->user_id;
-            $new->day_id = $day;
-            $new->time = $request->time;
+            $new->day_id = $request->day;
+            $new->time = $time;
             $new->save();
         }
     
