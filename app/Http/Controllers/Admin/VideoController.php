@@ -100,7 +100,7 @@ class VideoController extends Controller
             $file= $request->thumbnail;
             $filename= date('YmdHis').$file->getClientOriginalName();
             $file->move(public_path('VideoThumbnail'),$filename);
-            $new->thumbnail = $filename;
+            $update->thumbnail = $filename;
         }
         if($request->file('video')){
             // if(public_path('Video/'.$update->video))
