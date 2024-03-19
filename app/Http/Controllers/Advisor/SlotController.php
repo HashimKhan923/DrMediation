@@ -17,7 +17,7 @@ class SlotController extends Controller
 
     public function create(Request $request)
     {
-        foreach($request->day_id as $day)
+        foreach($request->day as $day)
         {
             $new = new Slot();
             $new->user_id = $request->user_id;
@@ -25,8 +25,9 @@ class SlotController extends Controller
             $new->time = $request->time;
             $new->save();
         }
-
-
+    
+        $response = ['status' => true, "message" => "New Slots Added Successfully!"];
+        return response($response, 200);
     }
 
     public function delete($id)
