@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('slots', function (Blueprint $table) {
-                        $table->renameColumn('day', 'day_id');
-
-                        $table->foreign('day_id')->references('id')->on('days')->onDelete('cascade')->onUpdate('cascade');
-                    });
+            $table->foreign('day_id')->references('id')->on('days')->onDelete('cascade')->onUpdate('cascade');
+            $table->bigInteger('day_id')->unsigned()->nullable();
+        });
     }
 
     /**
