@@ -127,18 +127,23 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
     
                                 /// Video \\\
+    Route::middleware('rate.limit')->group(function () {
 
-    Route::group(['prefix' => '/admin/video/'], function() {
-        Route::controller(App\Http\Controllers\Admin\VideoController::class)->group(function () {
-            Route::get('show/{id}','index');
-            Route::post('create','create');
-            Route::get('edit/{id}','edit');
-            Route::post('update','update');
-            Route::get('delete/{id}','delete');
-            Route::post('soft_delete','soft_delete');
-            Route::get('status/{id}','changeStatus');
-        });
-    });     
+        Route::group(['prefix' => '/admin/video/'], function() {
+            Route::controller(App\Http\Controllers\Admin\VideoController::class)->group(function () {
+                Route::get('show/{id}','index');
+                Route::post('create','create');
+                Route::get('edit/{id}','edit');
+                Route::post('update','update');
+                Route::get('delete/{id}','delete');
+                Route::post('soft_delete','soft_delete');
+                Route::get('status/{id}','changeStatus');
+            });
+        });   
+
+
+    });
+  
 
                                 /// Podcast \\\
 
