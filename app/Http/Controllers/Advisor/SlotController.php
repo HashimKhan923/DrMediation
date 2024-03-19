@@ -17,14 +17,16 @@ class SlotController extends Controller
 
     public function create(Request $request)
     {
-        $new = new Slot();
-        $new->user_id = $request->user_id;
-        $new->day = $request->day;
-        $new->time = $request->time;
-        $new->save();
+        foreach($request->day_id as $day)
+        {
+            $new = new Slot();
+            $new->user_id = $request->user_id;
+            $new->day_id = $day;
+            $new->time = $request->time;
+            $new->save();
+        }
 
-        $response = ['status'=>true,"message" => "New Slot Added Successfully!"];
-        return response($response, 200);
+
     }
 
     public function delete($id)
