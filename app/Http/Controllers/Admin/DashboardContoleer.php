@@ -26,7 +26,7 @@ class DashboardContoleer extends Controller
         $PodcastCount = Podcast::count();
         $BlogCount = Blog::count();
 
-        return response()->json(['UserCount'=>$UserCount,'AdvisorCount'=>$AdvisorCount,'SurveyCount'=>$SurveyCount,'CategoryCount'=>$CategoryCount,'AudioCount'=>$AudioCount,'VideoCount'=>$VideoCount,'PodcastCount'=>$PodcastCount,'BolgCount'=>$BolgCount,]);
+        return response()->json(['UserCount'=>$UserCount,'AdvisorCount'=>$AdvisorCount,'SurveyCount'=>$SurveyCount,'CategoryCount'=>$CategoryCount,'AudioCount'=>$AudioCount,'VideoCount'=>$VideoCount,'PodcastCount'=>$PodcastCount,'BlogCount'=>$BlogCount,]);
     }
 
 }
