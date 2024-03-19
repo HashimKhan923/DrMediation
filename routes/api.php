@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
     
                                 /// Video \\\
-    Route::middleware('rate.limit')->group(function () {
+
 
         Route::group(['prefix' => '/admin/video/'], function() {
             Route::controller(App\Http\Controllers\Admin\VideoController::class)->group(function () {
@@ -142,7 +142,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         });   
 
 
-    });
+
   
 
                                 /// Podcast \\\
