@@ -121,24 +121,34 @@ class VideoController extends Controller
         {
             VideoCategory::where('id',$item->id)->delete();
         }
-        
-            // Create categories and subcategories records
-            foreach ($request->categories as $categoryData) {
-                $category = new VideoCategory();
-                $category->video_id = $update->id;
-                $category->category_id = $categoryData['category_id'];
-                $category->save();
-        
-                foreach ($categoryData['subcategory_id'] as $subcategoryId) {
-                    $subcategory = new VideoSubCategories();
-                    $subcategory->video_id = $update->id;
-                    $subcategory->video_category_id = $category->id;
-                    $subcategory->subcategory_id = $subcategoryId;
+
+        if($request->categories != null)
+        {
+                        // Create categories and subcategories records
+                        foreach ($request->categories as $categoryData) {
+                            $category = new VideoCategory();
+                            $category->video_id = $update->id;
+                            $category->category_id = $categoryData['category_id'];
+                            $category->save();
+
+                            if(isset($categoryData['subcategory_id']))
+                            {
+                                foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                                    $subcategory = new VideoSubCategories();
+                                    $subcategory->video_id = $update->id;
+                                    $subcategory->video_category_id = $category->id;
+                                    $subcategory->subcategory_id = $subcategoryId;
+                                    
+                                    $subcategory->save();
+                                }
+                            }
                     
-                    $subcategory->save();
-                }
-    
-            }
+
+                
+                        }
+        }
+        
+
 
         $response = ['status'=>true,"message" => "Video Updated Successfully!"];
         return response($response, 200);

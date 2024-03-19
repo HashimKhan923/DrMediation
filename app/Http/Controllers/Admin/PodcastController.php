@@ -117,24 +117,32 @@ class PodcastController extends Controller
         {
             PodcastCategory::where('id',$item->id)->delete();
         }
-        
-        // Create categories and subcategories records
+        if($request->categories != null)
+        {
+                    // Create categories and subcategories records
         foreach ($request->categories as $categoryData) {
             $category = new PodcastCategory();
             $category->podcast_id = $update->id;
             $category->category_id = $categoryData['category_id'];
             $category->save();
-    
-            foreach ($categoryData['subcategory_id'] as $subcategoryId) {
-                $subcategory = new PodcastSubCategories();
-                $subcategory->podcast_id = $update->id;
-                $subcategory->podcast_category_id = $category->id;
-                $subcategory->subcategory_id = $subcategoryId;
-                
-                $subcategory->save();
+
+            if(isset($categoryData['subcategory_id']))
+            {
+                foreach ($categoryData['subcategory_id'] as $subcategoryId) {
+                    $subcategory = new PodcastSubCategories();
+                    $subcategory->podcast_id = $update->id;
+                    $subcategory->podcast_category_id = $category->id;
+                    $subcategory->subcategory_id = $subcategoryId;
+                    
+                    $subcategory->save();
+                }
             }
+    
+
 
         }
+        }
+
 
         $response = ['status'=>true,"message" => "Podcast Updated Successfully!"];
         return response($response, 200);
