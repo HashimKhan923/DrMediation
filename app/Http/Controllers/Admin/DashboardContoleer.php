@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Survey;
+use App\Models\Audio;
+use App\Models\Video;
+use App\Models\Podcast;
+use App\Models\Blog;
 
 class DashboardContoleer extends Controller
 {
@@ -17,7 +21,12 @@ class DashboardContoleer extends Controller
         $SurveyCount = Survey::count();
         $CategoryCount = Category::count();
 
-        return response()->json(['UserCount'=>$UserCount,'AdvisorCount'=>$AdvisorCount,'SurveyCount'=>$SurveyCount,'CategoryCount'=>$CategoryCount]);
+        $AudioCount = Audio::count();
+        $VideoCount = Video::count();
+        $PodcastCount = Podcast::count();
+        $BlogCount = Blog::count();
+
+        return response()->json(['UserCount'=>$UserCount,'AdvisorCount'=>$AdvisorCount,'SurveyCount'=>$SurveyCount,'CategoryCount'=>$CategoryCount,'AudioCount'=>$AudioCount,'VideoCount'=>$VideoCount,'PodcastCount'=>$PodcastCount,'BolgCount'=>$BolgCount,]);
     }
 
 }
