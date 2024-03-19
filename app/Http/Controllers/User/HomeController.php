@@ -22,21 +22,21 @@ class HomeController extends Controller
 
         $Audio = Audio::with('audioCat','audioSubCat.sub_category')->whereHas('audioCat', function ($query) use ($id){
             $query->where('category_id',$id);
-           })->get();
+           })->where('status',1)->get();
 
         $Video = Video::with('videoCat','videoSubCat.sub_category')->whereHas('videoCat', function ($query) use ($id){
             $query->where('category_id',$id);
-           })->get();
+           })->where('status',1)->get();
 
 
         $Podcast = Podcast::with('podcastCat','podcastSubCat.sub_category')->whereHas('podcastCat', function ($query) use ($id){
             $query->where('category_id',$id);
-           })->get();
+           })->where('status',1)->get();
 
 
         $Blog = Blog::with('blogCat','blogSubCat.sub_category')->whereHas('blogCat', function ($query) use ($id){
             $query->where('category_id',$id);
-           })->get();
+           })->where('status',1)->get();
 
         SubscribeUser::where('end_time','<=',now())->delete();
 
