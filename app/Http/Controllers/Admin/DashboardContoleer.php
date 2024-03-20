@@ -19,7 +19,7 @@ class DashboardContoleer extends Controller
         $UserCount = User::where('role_id',2)->count();
         $AdvisorCount = User::where('role_id',3)->count();
         $SurveyCount = Survey::count();
-        $CategoryCount = Category::count();
+        $CategoryCount = Category::where('id', '!=', 47)->count();
 
         $AudioCount = Audio::count();
         $VideoCount = Video::count();
