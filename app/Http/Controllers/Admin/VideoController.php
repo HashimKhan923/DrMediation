@@ -10,6 +10,7 @@ use App\Models\VideoSubCategories;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use FFMpeg;
 
 
 class VideoController extends Controller
@@ -37,9 +38,18 @@ class VideoController extends Controller
             $new->thumbnail = $filename;
         }
         if($request->file('video')){
-            $file= $request->video;
-            $filename= date('YmdHis').$file->getClientOriginalName();
-            $file->move(public_path('Video'),$filename);
+            $video = $request->file('video');
+
+            // Load the video using Laravel FFmpeg
+            $ffmpeg = FFMpeg::fromDisk('local')->open($video->getPathname());
+    
+            // Compress the video
+            $ffmpeg->export()
+                   ->inFormat(new \FFMpeg\Format\Video\X264('libmp3lame', 'libx264'))
+                   ->save(public_path('Video') . '/compressed_video.mp4');
+    
+            unlink($video->getPathname());
+            
             $new->video = $filename;
         }
         $new->subscription = $request->subscription;
